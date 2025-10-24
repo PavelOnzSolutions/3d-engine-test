@@ -6,3 +6,8 @@
 46	2040	7830112556113823	CMakeFiles/engine_core.dir/engine/core/Src/Config.cpp.obj	85a24bc2ebf47db3
 2041	2140	7830112576058809	engine_core.lib	cb5d467e36d90cde
 2140	2384	7830112577047543	3DEngineTest.exe	110886e08c5c3690
+32	3542	7830124109060274	CMakeFiles/engine_core.dir/engine/core/Src/Config.cpp.obj	85a24bc2ebf47db3
+41	4005	7830124109156488	CMakeFiles/engine_core.dir/engine/core/Src/Logger.cpp.obj	6a2e6b662c15e76f
+4005	4116	7830124148802686	engine_core.lib	97d3f16575c4b238
+47	4459	7830124109212172	CMakeFiles/3DEngineTest.dir/main.cpp.obj	50964689e9317149
+4459	4741	7830124153338215	3DEngineTest.exe	110886e08c5c3690

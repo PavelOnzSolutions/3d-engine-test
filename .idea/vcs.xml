@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Build/Output/ExternalsCache/boostnowide/37e9d3853fc4a1e2de3eee207ea766555faa1c43" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Build/Output/ExternalsCache/cli11/7f39ee0cb46c254fce19bebe84347d1baadf066f" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Build/Output/ExternalsCache/cmakemodules/1e9f4dc1ee1961639df5761dc3d78ff9f14e38e0" vcs="Git" />
@@ -15,5 +16,6 @@
     <mapping directory="$PROJECT_DIR$/Build/Output/ExternalsCache/magicenum/b1e791b02d60d4a7f822afa374bfd3d1818e363d" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Build/Output/ExternalsCache/stb/600bf25e48928e18d35f5a09e429ac2ecc08f51c" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Build/Output/ExternalsCache/taskflow/23d8016725c3c2b32c63a8fc30d7f566934d1536" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/cmake-build-release-visual-studio/_deps/methanekit-src" vcs="Git" />
   </component>
 </project>
