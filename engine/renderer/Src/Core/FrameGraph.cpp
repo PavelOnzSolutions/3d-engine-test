@@ -31,7 +31,7 @@ void FrameGraph::Execute(RenderContext& ctx)
     for (const auto& pass : m_passes)
     {
         if (pass)
-            pass->Execute(ctx);
+            pass->Execute(ctx, *this);
     }
 }
 

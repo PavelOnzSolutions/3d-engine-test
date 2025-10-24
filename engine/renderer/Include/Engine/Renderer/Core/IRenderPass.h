@@ -22,7 +22,7 @@ public:
     virtual void Setup(FrameGraph& fg) = 0;
 
     // Called every frame in the graph execution order
-    virtual void Execute(RenderContext& ctx) = 0;
+    virtual void Execute(RenderContext& ctx, FrameGraph& fg) = 0;
 };
 
 using IRenderPassPtr = std::shared_ptr<IRenderPass>;
