@@ -1,0 +1,1403 @@
+{
+	"inputs" : 
+	[
+		{
+			"path" : "CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/CMakeFiles/4.0.2/CMakeSystem.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeSystemSpecificInitialize.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Windows-Initialize.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/CMakeFiles/4.0.2/CMakeCXXCompiler.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeSystemSpecificInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeGenericSystem.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeInitializeConfigs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Windows.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/WindowsPaths.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeCXXInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeLanguageInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/MSVC-CXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/MSVC.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/CMakeCommonCompilerMacros.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Windows-MSVC-CXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Windows-MSVC.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/CMakeFiles/4.0.2/CMakeRCCompiler.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeRCInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeCommonLanguageInclude.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/Internal/CMakeCXXLinkerInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/Internal/CMakeCommonLinkerInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/Linker/MSVC-CXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/Linker/MSVC.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Linker/Windows-MSVC-CXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Linker/Windows-MSVC.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindBoost.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindThreads.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CheckLibraryExists.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CheckIncludeFileCXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CheckCXXSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/Internal/CheckSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FetchContent.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/ExternalProject/shared_internal_commands.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindGit.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FetchContent/CMakeLists.cmake.in"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/CMakeFiles/4.0.2/CMakeCCompiler.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeCInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeLanguageInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/MSVC-C.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/MSVC.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/Compiler/CMakeCommonCompilerMacros.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Windows-MSVC-C.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Windows-MSVC.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeCommonLanguageInclude.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/Internal/CMakeCLinkerInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/Internal/CMakeCommonLinkerInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/Linker/MSVC-C.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/Linker/MSVC.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Linker/Windows-MSVC-C.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/Platform/Linker/Windows-MSVC.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMake/MethaneModules.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMake/MethaneGlobalOptions.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMake/MethaneBuildOptions.cmake"
+		},
+		{
+			"path" : "Build/Output/ExternalsCache/cmakemodules/1e9f4dc1ee1961639df5761dc3d78ff9f14e38e0/FindWindowsSDK.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Externals/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Externals/CPM.cmake"
+		},
+		{
+			"path" : "Build/Output/ExternalsCache/cpm/CPM_0.40.8.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FetchContent.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/ExternalProject/shared_internal_commands.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Externals/CMakeModules.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindGit.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Externals/CMRC.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindGit.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPkgConfig.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"path" : "Build/Output/ExternalsCache/cmakemodules/1e9f4dc1ee1961639df5761dc3d78ff9f14e38e0/FindWindowsSDK.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Externals/BoostNowide.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindGit.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Externals/FMT.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindGit.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Externals/CLI11.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindGit.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Externals/FreeType2.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindGit.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Externals/HLSLpp.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindGit.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Externals/MagicEnum.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindGit.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Externals/TaskFlow.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindGit.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Externals/STB.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindGit.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Externals/DirectXHeaders.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindGit.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Externals/DirectXTex.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindGit.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Externals/DirectXShaderCompilerBinary.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMake/MethaneModules.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindGit.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"path" : "Build/Output/ExternalsCache/boostnowide/37e9d3853fc4a1e2de3eee207ea766555faa1c43/CMakeLists.txt"
+		},
+		{
+			"path" : "Build/Output/ExternalsCache/boostnowide/37e9d3853fc4a1e2de3eee207ea766555faa1c43/cmake/NowideAddWarnings.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CheckCXXSourceCompiles.cmake"
+		},
+		{
+			"path" : "Build/Output/ExternalsCache/fmt/03e5b220e9d2b5c10e03102a03d427e038c344c0/CMakeLists.txt"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeParseArguments.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/GNUInstallDirs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CheckCXXCompilerFlag.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/Internal/CheckCompilerFlag.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/Internal/CheckFlagCommonConfig.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/Internal/CheckSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CheckCXXSourceCompiles.cmake"
+		},
+		{
+			"path" : "Build/Output/ExternalsCache/fmt/03e5b220e9d2b5c10e03102a03d427e038c344c0/support/cmake/JoinPaths.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakePackageConfigHelpers.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/WriteBasicConfigVersionFile.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/BasicConfigVersion-AnyNewerVersion.cmake.in"
+		},
+		{
+			"path" : "Build/Output/ExternalsCache/fmt/03e5b220e9d2b5c10e03102a03d427e038c344c0/support/cmake/fmt.pc.in"
+		},
+		{
+			"path" : "Build/Output/ExternalsCache/fmt/03e5b220e9d2b5c10e03102a03d427e038c344c0/support/cmake/fmt-config.cmake.in"
+		},
+		{
+			"path" : "Build/Output/ExternalsCache/cli11/7f39ee0cb46c254fce19bebe84347d1baadf066f/CMakeLists.txt"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeDependentOption.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/GNUInstallDirs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FetchContent.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/ExternalProject/shared_internal_commands.cmake"
+		},
+		{
+			"path" : "Build/Output/ExternalsCache/cli11/7f39ee0cb46c254fce19bebe84347d1baadf066f/cmake/CLI11Warnings.cmake"
+		},
+		{
+			"path" : "Build/Output/ExternalsCache/cli11/7f39ee0cb46c254fce19bebe84347d1baadf066f/fuzz/CMakeLists.txt"
+		},
+		{
+			"path" : "Build/Output/ExternalsCache/cli11/7f39ee0cb46c254fce19bebe84347d1baadf066f/src/CMakeLists.txt"
+		},
+		{
+			"path" : "Build/Output/ExternalsCache/cli11/7f39ee0cb46c254fce19bebe84347d1baadf066f/single-include/CMakeLists.txt"
+		},
+		{
+			"path" : "Build/Output/ExternalsCache/freetype2/f344d7b284a635efcd1c1111639de1442c0fbe6a/CMakeLists.txt"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CheckIncludeFile.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeDependentOption.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPkgConfig.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/GNUInstallDirs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakePackageConfigHelpers.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/WriteBasicConfigVersionFile.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/BasicConfigVersion-SameMajorVersion.cmake.in"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CPack.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CPackComponent.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Templates/CPackConfig.cmake.in"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Templates/CPackConfig.cmake.in"
+		},
+		{
+			"path" : "Build/Output/ExternalsCache/magicenum/b1e791b02d60d4a7f822afa374bfd3d1818e363d/CMakeLists.txt"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/GNUInstallDirs.cmake"
+		},
+		{
+			"path" : "Build/Output/ExternalsCache/magicenum/b1e791b02d60d4a7f822afa374bfd3d1818e363d/cmake/GenPkgConfig/GenPkgConfig.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CPackComponent.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakePackageConfigHelpers.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/WriteBasicConfigVersionFile.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/BasicConfigVersion-AnyNewerVersion.cmake.in"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CPack.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CPackComponent.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Templates/CPackConfig.cmake.in"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Templates/CPackConfig.cmake.in"
+		},
+		{
+			"path" : "Build/Output/ExternalsCache/taskflow/23d8016725c3c2b32c63a8fc30d7f566934d1536/CMakeLists.txt"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CheckLanguage.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/GNUInstallDirs.cmake"
+		},
+		{
+			"path" : "Build/Output/ExternalsCache/taskflow/23d8016725c3c2b32c63a8fc30d7f566934d1536/cmake/Atomic/CheckAtomic.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CheckCXXSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CheckLibraryExists.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindThreads.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CheckLibraryExists.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CheckIncludeFile.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CheckCSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/Internal/CheckSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakePackageConfigHelpers.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/WriteBasicConfigVersionFile.cmake"
+		},
+		{
+			"path" : "Build/Output/ExternalsCache/taskflow/23d8016725c3c2b32c63a8fc30d7f566934d1536/TaskflowConfig.cmake.in"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/BasicConfigVersion-SameMinorVersion.cmake.in"
+		},
+		{
+			"path" : "Build/Output/ExternalsCache/directxheaders/8d4e0a42d14098140810d7987f6b4aa44d0fb983/CMakeLists.txt"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CTest.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CTestUseLaunchers.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CTestTargets.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/DartConfiguration.tcl.in"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/GNUInstallDirs.cmake"
+		},
+		{
+			"path" : "Build/Output/ExternalsCache/directxtex/56628ed3917bb6ba941573329ec45f3d162a68f9/CMakeLists.txt"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/GNUInstallDirs.cmake"
+		},
+		{
+			"path" : "Build/Output/ExternalsCache/directxtex/56628ed3917bb6ba941573329ec45f3d162a68f9/build/CompilerAndLinker.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CheckIncludeFileCXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindOpenMP.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeParseImplicitLinkInfo.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakePackageConfigHelpers.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/WriteBasicConfigVersionFile.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/BasicConfigVersion-AnyNewerVersion.cmake.in"
+		},
+		{
+			"path" : "Build/Output/ExternalsCache/directxtex/56628ed3917bb6ba941573329ec45f3d162a68f9/build/DirectXTex-config.cmake.in"
+		},
+		{
+			"path" : "Build/Output/ExternalsCache/directxtex/56628ed3917bb6ba941573329ec45f3d162a68f9/build/JoinPaths.cmake"
+		},
+		{
+			"path" : "Build/Output/ExternalsCache/directxtex/56628ed3917bb6ba941573329ec45f3d162a68f9/build/DirectXTex.pc.in"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CTest.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CTestUseLaunchers.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CTestTargets.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/DartConfiguration.tcl.in"
+		},
+		{
+			"path" : "Build/Output/ExternalsCache/directxshadercompilerbinary/11d794290fa9540329c8b626982037a2c40de098/CMakeLists.txt"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/ExternalProject.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/ExternalProject/shared_internal_commands.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/ExternalProject/mkdirs.cmake.in"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/directxshadercompilerbinary-build/DirectXCompilerUnpack-prefix/tmp/DirectXCompilerUnpack-mkdirs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/ExternalProject/verify.cmake.in"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/ExternalProject/extractfile.cmake.in"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/ExternalProject/RepositoryInfo.txt.in"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/ExternalProject/UpdateInfo.txt.in"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/ExternalProject/PatchInfo.txt.in"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/ExternalProject/cfgcmd.txt.in"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Common/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Common/Instrumentation/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMake/MethaneModules.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Common/PrecompiledHeaders/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMake/MethaneModules.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Common/Primitives/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMake/MethaneModules.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Data/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Data/Types/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMake/MethaneModules.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Data/Events/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMake/MethaneModules.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Data/Provider/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMake/MethaneModules.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Data/Primitives/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMake/MethaneModules.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Data/RangeSet/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMake/MethaneModules.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Data/Animation/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMake/MethaneModules.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Platform/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Platform/App/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMake/MethaneModules.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Platform/AppView/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMake/MethaneModules.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Platform/Input/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Platform/Input/Mouse/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMake/MethaneModules.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Platform/Input/Keyboard/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMake/MethaneModules.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Platform/Input/Controllers/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMake/MethaneModules.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Platform/Input/ActionControllers/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMake/MethaneModules.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Platform/Utils/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMake/MethaneModules.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Graphics/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Graphics/Types/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMake/MethaneModules.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Graphics/Mesh/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMake/MethaneModules.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Graphics/Camera/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMake/MethaneModules.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Graphics/RHI/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Graphics/RHI/Interface/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMake/MethaneModules.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Graphics/RHI/Base/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMake/MethaneModules.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Graphics/RHI/DirectX/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMake/MethaneModules.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Graphics/RHI/Impl/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMake/MethaneModules.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Graphics/Primitives/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMake/MethaneShaders.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMake/MethaneUtils.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMake/MethaneModules.cmake"
+		},
+		{
+			"path" : "Build/Output/ExternalsCache/cmrc/d29bc62762637418ef0c5c6042df10238357da4c/CMakeRC.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeParseArguments.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Graphics/App/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/UserInterface/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/UserInterface/Types/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMake/MethaneModules.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/UserInterface/Typography/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMake/MethaneShaders.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMake/MethaneUtils.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMake/MethaneModules.cmake"
+		},
+		{
+			"path" : "Build/Output/ExternalsCache/cmrc/d29bc62762637418ef0c5c6042df10238357da4c/CMakeRC.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeParseArguments.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/UserInterface/Widgets/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMake/MethaneResources.cmake"
+		},
+		{
+			"path" : "Build/Output/ExternalsCache/cmrc/d29bc62762637418ef0c5c6042df10238357da4c/CMakeRC.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeParseArguments.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/UserInterface/App/CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/CMake/MethaneResources.cmake"
+		},
+		{
+			"path" : "Build/Output/ExternalsCache/cmrc/d29bc62762637418ef0c5c6042df10238357da4c/CMakeRC.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/CMakeParseArguments.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Kit/CMakeLists.txt"
+		}
+	],
+	"kind" : "cmakeFiles",
+	"paths" : 
+	{
+		"build" : "C:/Users/pxo/CLionProjects/3DEngineTest/cmake-build-release-visual-studio",
+		"source" : "C:/Users/pxo/CLionProjects/3DEngineTest"
+	},
+	"version" : 
+	{
+		"major" : 1,
+		"minor" : 1
+	}
+}

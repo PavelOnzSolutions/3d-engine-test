@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "_deps/cli11-build/src",
+		"source" : "Build/Output/ExternalsCache/cli11/7f39ee0cb46c254fce19bebe84347d1baadf066f/src"
+	}
+}

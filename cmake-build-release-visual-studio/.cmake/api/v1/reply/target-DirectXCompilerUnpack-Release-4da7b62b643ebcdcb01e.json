@@ -1,0 +1,181 @@
+{
+	"backtrace" : 2,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_custom_target",
+			"ExternalProject_Add",
+			"add_dependencies",
+			"_ep_step_add_target",
+			"ExternalProject_Add_Step",
+			"cmake_language",
+			"_ep_add_build_command"
+		],
+		"files" : 
+		[
+			"C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/ExternalProject.cmake",
+			"Build/Output/ExternalsCache/directxshadercompilerbinary/11d794290fa9540329c8b626982037a2c40de098/CMakeLists.txt",
+			"C:/Users/pxo/AppData/Local/Programs/CLion/bin/cmake/win/x64/share/cmake-4.0/Modules/ExternalProject.cmake:2774:EVAL"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 1
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 47,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 2994,
+				"parent" : 1
+			},
+			{
+				"command" : 6,
+				"file" : 0,
+				"line" : 3080,
+				"parent" : 1
+			},
+			{
+				"command" : 5,
+				"file" : 0,
+				"line" : 2774,
+				"parent" : 3
+			},
+			{
+				"file" : 2,
+				"parent" : 4
+			},
+			{
+				"command" : 4,
+				"file" : 2,
+				"line" : 2,
+				"parent" : 5
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 2303,
+				"parent" : 6
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 1924,
+				"parent" : 7
+			}
+		]
+	},
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 8,
+			"id" : "DirectXCompilerUnpack-build::@c8d136a6e1609d695bbe"
+		}
+	],
+	"folder" : 
+	{
+		"name" : "ExternalProjectTargets/DirectXCompilerUnpack"
+	},
+	"id" : "DirectXCompilerUnpack::@c8d136a6e1609d695bbe",
+	"name" : "DirectXCompilerUnpack",
+	"paths" : 
+	{
+		"build" : "_deps/directxshadercompilerbinary-build",
+		"source" : "Build/Output/ExternalsCache/directxshadercompilerbinary/11d794290fa9540329c8b626982037a2c40de098"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 2,
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/directxshadercompilerbinary-build/CMakeFiles/DirectXCompilerUnpack",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/directxshadercompilerbinary-build/CMakeFiles/DirectXCompilerUnpack.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/directxshadercompilerbinary-build/CMakeFiles/DirectXCompilerUnpack-complete.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/directxshadercompilerbinary-build/DirectXCompilerUnpack-prefix/src/DirectXCompilerUnpack-stamp/DirectXCompilerUnpack-build.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/directxshadercompilerbinary-build/DirectXCompilerUnpack-prefix/src/DirectXCompilerUnpack-stamp/DirectXCompilerUnpack-configure.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/directxshadercompilerbinary-build/DirectXCompilerUnpack-prefix/src/DirectXCompilerUnpack-stamp/DirectXCompilerUnpack-download.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/directxshadercompilerbinary-build/DirectXCompilerUnpack-prefix/src/DirectXCompilerUnpack-stamp/DirectXCompilerUnpack-install.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/directxshadercompilerbinary-build/DirectXCompilerUnpack-prefix/src/DirectXCompilerUnpack-stamp/DirectXCompilerUnpack-mkdir.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/directxshadercompilerbinary-build/DirectXCompilerUnpack-prefix/src/DirectXCompilerUnpack-stamp/DirectXCompilerUnpack-patch.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "cmake-build-release-visual-studio/_deps/directxshadercompilerbinary-build/DirectXCompilerUnpack-prefix/src/DirectXCompilerUnpack-stamp/DirectXCompilerUnpack-update.rule",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "UTILITY"
+}

@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "_deps/methanekit-build/Externals",
+		"source" : "cmake-build-release-visual-studio/_deps/methanekit-src/Externals"
+	}
+}

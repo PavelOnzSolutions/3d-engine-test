@@ -1,0 +1,793 @@
+{
+	"archive" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "/machine:x64",
+				"role" : "flags"
+			}
+		]
+	},
+	"artifacts" : 
+	[
+		{
+			"path" : "_deps/methanekit-build/Modules/Common/PrecompiledHeaders/MethaneMathPrecompiledHeaders.lib"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"target_link_libraries",
+			"target_precompile_headers"
+		],
+		"files" : 
+		[
+			"cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Common/PrecompiledHeaders/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 102,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 106,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 111,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "/DWIN32 /D_WINDOWS /EHsc /MP /O2 /Ob2 /DNDEBUG -std:c++20 -MT"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "/Ox"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "/GL"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "/GF"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "/GS-"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "/fp:except-"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "/EHsc"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "/W4"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "/WX"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "/wd4250"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "/wd4324"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "/wd4201"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "/wd4714"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "/utf-8"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "/wd4267"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "/wd4146"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "/wd4244"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "/wd4127"
+				},
+				{
+					"fragment" : "/YcC:/Users/pxo/CLionProjects/3DEngineTest/cmake-build-release-visual-studio/_deps/methanekit-build/Modules/Common/PrecompiledHeaders/CMakeFiles/MethaneMathPrecompiledHeaders.dir/cmake_pch.hxx /FpC:/Users/pxo/CLionProjects/3DEngineTest/cmake-build-release-visual-studio/_deps/methanekit-build/Modules/Common/PrecompiledHeaders/CMakeFiles/MethaneMathPrecompiledHeaders.dir/./cmake_pch.cxx.pch /FIC:/Users/pxo/CLionProjects/3DEngineTest/cmake-build-release-visual-studio/_deps/methanekit-build/Modules/Common/PrecompiledHeaders/CMakeFiles/MethaneMathPrecompiledHeaders.dir/cmake_pch.hxx"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 2,
+					"define" : "HLSLPP_COORDINATES=0"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "HLSLPP_FEATURE_TRANSFORM"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "HLSLPP_LOGICAL_LAYOUT=0"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "METHANE_CHECKS_ENABLED"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "METHANE_VERSION_BUILD=0"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "METHANE_VERSION_MAJOR=0"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "METHANE_VERSION_MINOR=8"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "METHANE_VERSION_PATCH=1"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "NDEBUG"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "NOMINMAX"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "NOWIDE_NO_LIB"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "UNICODE"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "USE_PIX"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "WIN32_LEAN_AND_MEAN"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "_UNICODE"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 2,
+					"path" : "C:/Program Files (x86)/Windows Kits/10/Include/10.0.22621.0/shared"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/Program Files (x86)/Windows Kits/10/Include/10.0.22621.0/um"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/Program Files (x86)/Windows Kits/10/Include/10.0.22621.0/winrt"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/Program Files (x86)/Windows Kits/10/Include/10.0.22621.0/ucrt"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/Users/pxo/CLionProjects/3DEngineTest/cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Common/Primitives/Include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/Users/pxo/CLionProjects/3DEngineTest/Build/Output/ExternalsCache/fmt/03e5b220e9d2b5c10e03102a03d427e038c344c0/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/Users/pxo/CLionProjects/3DEngineTest/cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Common/Instrumentation/Include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/Users/pxo/CLionProjects/3DEngineTest/Build/Output/ExternalsCache/boostnowide/37e9d3853fc4a1e2de3eee207ea766555faa1c43/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/Users/pxo/CLionProjects/3DEngineTest/Build/Output/ExternalsCache/hlslpp/8eb0af6f91b620ee9fa38188f1127510282073e7/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/Users/pxo/CLionProjects/3DEngineTest/Build/Output/ExternalsCache/taskflow/23d8016725c3c2b32c63a8fc30d7f566934d1536"
+				}
+			],
+			"language" : "CXX",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					2,
+					2
+				],
+				"standard" : "20"
+			},
+			"precompileHeaders" : 
+			[
+				{
+					"backtrace" : 3,
+					"header" : "<windows.h>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<wrl.h>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "C:/Users/pxo/CLionProjects/3DEngineTest/cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Common/Primitives/Include/Methane/Memory.hpp"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "C:/Users/pxo/CLionProjects/3DEngineTest/cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Common/Primitives/Include/Methane/Checks.hpp"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "C:/Users/pxo/CLionProjects/3DEngineTest/cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Common/Instrumentation/Include/Methane/Instrumentation.h"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<fmt/format.h>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<nowide/convert.hpp>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<limits>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<string>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<string_view>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<sstream>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<tuple>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<optional>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<exception>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<iterator>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<set>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<unordered_set>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<map>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<unordered_map>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<list>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<vector>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<cassert>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<cmath>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<memory>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<functional>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<algorithm>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<utility>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<thread>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<hlsl++.h>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<taskflow/taskflow.hpp>"
+				}
+			],
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "/DWIN32 /D_WINDOWS /EHsc /MP /O2 /Ob2 /DNDEBUG -std:c++20 -MT"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "/Ox"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "/GL"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "/GF"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "/GS-"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "/fp:except-"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "/EHsc"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "/W4"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "/WX"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "/wd4250"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "/wd4324"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "/wd4201"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "/wd4714"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "/utf-8"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "/wd4267"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "/wd4146"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "/wd4244"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "/wd4127"
+				},
+				{
+					"fragment" : "/YuC:/Users/pxo/CLionProjects/3DEngineTest/cmake-build-release-visual-studio/_deps/methanekit-build/Modules/Common/PrecompiledHeaders/CMakeFiles/MethaneMathPrecompiledHeaders.dir/cmake_pch.hxx /FpC:/Users/pxo/CLionProjects/3DEngineTest/cmake-build-release-visual-studio/_deps/methanekit-build/Modules/Common/PrecompiledHeaders/CMakeFiles/MethaneMathPrecompiledHeaders.dir/./cmake_pch.cxx.pch /FIC:/Users/pxo/CLionProjects/3DEngineTest/cmake-build-release-visual-studio/_deps/methanekit-build/Modules/Common/PrecompiledHeaders/CMakeFiles/MethaneMathPrecompiledHeaders.dir/cmake_pch.hxx"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 2,
+					"define" : "HLSLPP_COORDINATES=0"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "HLSLPP_FEATURE_TRANSFORM"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "HLSLPP_LOGICAL_LAYOUT=0"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "METHANE_CHECKS_ENABLED"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "METHANE_VERSION_BUILD=0"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "METHANE_VERSION_MAJOR=0"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "METHANE_VERSION_MINOR=8"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "METHANE_VERSION_PATCH=1"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "NDEBUG"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "NOMINMAX"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "NOWIDE_NO_LIB"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "UNICODE"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "USE_PIX"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "WIN32_LEAN_AND_MEAN"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "_UNICODE"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 2,
+					"path" : "C:/Program Files (x86)/Windows Kits/10/Include/10.0.22621.0/shared"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/Program Files (x86)/Windows Kits/10/Include/10.0.22621.0/um"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/Program Files (x86)/Windows Kits/10/Include/10.0.22621.0/winrt"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/Program Files (x86)/Windows Kits/10/Include/10.0.22621.0/ucrt"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/Users/pxo/CLionProjects/3DEngineTest/cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Common/Primitives/Include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/Users/pxo/CLionProjects/3DEngineTest/Build/Output/ExternalsCache/fmt/03e5b220e9d2b5c10e03102a03d427e038c344c0/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/Users/pxo/CLionProjects/3DEngineTest/cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Common/Instrumentation/Include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/Users/pxo/CLionProjects/3DEngineTest/Build/Output/ExternalsCache/boostnowide/37e9d3853fc4a1e2de3eee207ea766555faa1c43/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/Users/pxo/CLionProjects/3DEngineTest/Build/Output/ExternalsCache/hlslpp/8eb0af6f91b620ee9fa38188f1127510282073e7/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/Users/pxo/CLionProjects/3DEngineTest/Build/Output/ExternalsCache/taskflow/23d8016725c3c2b32c63a8fc30d7f566934d1536"
+				}
+			],
+			"language" : "CXX",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					2,
+					2
+				],
+				"standard" : "20"
+			},
+			"precompileHeaders" : 
+			[
+				{
+					"backtrace" : 3,
+					"header" : "<windows.h>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<wrl.h>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "C:/Users/pxo/CLionProjects/3DEngineTest/cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Common/Primitives/Include/Methane/Memory.hpp"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "C:/Users/pxo/CLionProjects/3DEngineTest/cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Common/Primitives/Include/Methane/Checks.hpp"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "C:/Users/pxo/CLionProjects/3DEngineTest/cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Common/Instrumentation/Include/Methane/Instrumentation.h"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<fmt/format.h>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<nowide/convert.hpp>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<limits>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<string>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<string_view>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<sstream>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<tuple>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<optional>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<exception>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<iterator>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<set>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<unordered_set>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<map>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<unordered_map>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<list>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<vector>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<cassert>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<cmath>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<memory>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<functional>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<algorithm>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<utility>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<thread>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<hlsl++.h>"
+				},
+				{
+					"backtrace" : 3,
+					"header" : "<taskflow/taskflow.hpp>"
+				}
+			],
+			"sourceIndexes" : 
+			[
+				1
+			]
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 2,
+			"id" : "nowide::@8e8f89380f3d8b0be209"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "fmt::@976f4f0bee90b99ecdb6"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "MethaneInstrumentation::@36747f73b5e4e52f9159"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "MethanePrimitives::@190f0206acffac2b5765"
+		}
+	],
+	"folder" : 
+	{
+		"name" : "Modules/Common"
+	},
+	"id" : "MethaneMathPrecompiledHeaders::@fe169b4e39c0ab330617",
+	"name" : "MethaneMathPrecompiledHeaders",
+	"nameOnDisk" : "MethaneMathPrecompiledHeaders.lib",
+	"paths" : 
+	{
+		"build" : "_deps/methanekit-build/Modules/Common/PrecompiledHeaders",
+		"source" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Common/PrecompiledHeaders"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0,
+				1
+			]
+		},
+		{
+			"name" : "Precompile Header File",
+			"sourceIndexes" : 
+			[
+				2
+			]
+		},
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				3
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 0,
+			"compileGroupIndex" : 0,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-build/Modules/Common/PrecompiledHeaders/CMakeFiles/MethaneMathPrecompiledHeaders.dir/cmake_pch.cxx",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 1,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-src/Modules/Common/PrecompiledHeaders/Sources/Methane/PrecompiledHeaders.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 0,
+			"path" : "cmake-build-release-visual-studio/_deps/methanekit-build/Modules/Common/PrecompiledHeaders/CMakeFiles/MethaneMathPrecompiledHeaders.dir/cmake_pch.hxx",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"path" : "Build/Output/ExternalsCache/hlslpp/8eb0af6f91b620ee9fa38188f1127510282073e7/include/hlsl++.natvis",
+			"sourceGroupIndex" : 2
+		}
+	],
+	"type" : "STATIC_LIBRARY"
+}

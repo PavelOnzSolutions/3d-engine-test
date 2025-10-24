@@ -1,0 +1,130 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install",
+			"configure_pkg_config_file_vars",
+			"configure_pkg_config_file"
+		],
+		"files" : 
+		[
+			"Build/Output/ExternalsCache/magicenum/b1e791b02d60d4a7f822afa374bfd3d1818e363d/CMakeLists.txt",
+			"Build/Output/ExternalsCache/magicenum/b1e791b02d60d4a7f822afa374bfd3d1818e363d/cmake/GenPkgConfig/GenPkgConfig.cmake"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 82,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 121,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 135,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 139,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 62,
+				"parent" : 4
+			},
+			{
+				"command" : 0,
+				"file" : 1,
+				"line" : 233,
+				"parent" : 5
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 156,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "include",
+			"paths" : 
+			[
+				"Build/Output/ExternalsCache/magicenum/b1e791b02d60d4a7f822afa374bfd3d1818e363d/include/magic_enum"
+			],
+			"type" : "directory"
+		},
+		{
+			"backtrace" : 2,
+			"component" : "Unspecified",
+			"destination" : "share/cmake/magic_enum",
+			"exportName" : "magic_enum",
+			"exportTargets" : 
+			[
+				{
+					"id" : "magic_enum::@98cf5220a51035d4a53e",
+					"index" : 0
+				}
+			],
+			"paths" : 
+			[
+				"_deps/magicenum-build/CMakeFiles/Export/62ab72b7f5933ea98f20ecb8c6b54221/magic_enumConfig.cmake"
+			],
+			"type" : "export"
+		},
+		{
+			"backtrace" : 3,
+			"component" : "Unspecified",
+			"destination" : "share/cmake/magic_enum",
+			"paths" : 
+			[
+				"cmake-build-release-visual-studio/_deps/magicenum-build/magic_enumConfigVersion.cmake"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 6,
+			"component" : "Unspecified",
+			"destination" : "share/pkgconfig",
+			"paths" : 
+			[
+				"cmake-build-release-visual-studio/_deps/magicenum-build/magic_enum.pc"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 7,
+			"component" : "Unspecified",
+			"destination" : "share/magic_enum",
+			"paths" : 
+			[
+				"Build/Output/ExternalsCache/magicenum/b1e791b02d60d4a7f822afa374bfd3d1818e363d/package.xml"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "_deps/magicenum-build",
+		"source" : "Build/Output/ExternalsCache/magicenum/b1e791b02d60d4a7f822afa374bfd3d1818e363d"
+	}
+}

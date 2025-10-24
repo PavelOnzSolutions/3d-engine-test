@@ -1,0 +1,8 @@
+# ninja log v6
+37	163	7830112556020769	CMakeFiles/engine_core.dir/engine/core/Src/Engine.cpp.obj	f4789b542d475f4c
+53	1172	7830112556183763	CMakeFiles/engine_renderer_factory.dir/engine/renderer/Src/RendererFactory.cpp.obj	18551a593e245a10
+1173	1273	7830112567382277	engine_renderer_factory.lib	ed934eb1efbb3368
+60	1868	7830112556252484	CMakeFiles/3DEngineTest.dir/main.cpp.obj	50964689e9317149
+46	2040	7830112556113823	CMakeFiles/engine_core.dir/engine/core/Src/Config.cpp.obj	85a24bc2ebf47db3
+2041	2140	7830112576058809	engine_core.lib	cb5d467e36d90cde
+2140	2384	7830112577047543	3DEngineTest.exe	110886e08c5c3690

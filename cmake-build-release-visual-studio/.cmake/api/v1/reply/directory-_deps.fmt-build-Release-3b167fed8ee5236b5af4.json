@@ -1,0 +1,129 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"Build/Output/ExternalsCache/fmt/03e5b220e9d2b5c10e03102a03d427e038c344c0/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 434,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 449,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 452,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 456,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "fmt-core",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"_deps/fmt-build/fmt.lib"
+			],
+			"targetId" : "fmt::@976f4f0bee90b99ecdb6",
+			"targetIndex" : 82,
+			"type" : "target"
+		},
+		{
+			"backtrace" : 1,
+			"component" : "fmt-core",
+			"destination" : "include/fmt",
+			"paths" : 
+			[
+				"Build/Output/ExternalsCache/fmt/03e5b220e9d2b5c10e03102a03d427e038c344c0/include/fmt/args.h",
+				"Build/Output/ExternalsCache/fmt/03e5b220e9d2b5c10e03102a03d427e038c344c0/include/fmt/base.h",
+				"Build/Output/ExternalsCache/fmt/03e5b220e9d2b5c10e03102a03d427e038c344c0/include/fmt/chrono.h",
+				"Build/Output/ExternalsCache/fmt/03e5b220e9d2b5c10e03102a03d427e038c344c0/include/fmt/color.h",
+				"Build/Output/ExternalsCache/fmt/03e5b220e9d2b5c10e03102a03d427e038c344c0/include/fmt/compile.h",
+				"Build/Output/ExternalsCache/fmt/03e5b220e9d2b5c10e03102a03d427e038c344c0/include/fmt/core.h",
+				"Build/Output/ExternalsCache/fmt/03e5b220e9d2b5c10e03102a03d427e038c344c0/include/fmt/format.h",
+				"Build/Output/ExternalsCache/fmt/03e5b220e9d2b5c10e03102a03d427e038c344c0/include/fmt/format-inl.h",
+				"Build/Output/ExternalsCache/fmt/03e5b220e9d2b5c10e03102a03d427e038c344c0/include/fmt/os.h",
+				"Build/Output/ExternalsCache/fmt/03e5b220e9d2b5c10e03102a03d427e038c344c0/include/fmt/ostream.h",
+				"Build/Output/ExternalsCache/fmt/03e5b220e9d2b5c10e03102a03d427e038c344c0/include/fmt/printf.h",
+				"Build/Output/ExternalsCache/fmt/03e5b220e9d2b5c10e03102a03d427e038c344c0/include/fmt/ranges.h",
+				"Build/Output/ExternalsCache/fmt/03e5b220e9d2b5c10e03102a03d427e038c344c0/include/fmt/std.h",
+				"Build/Output/ExternalsCache/fmt/03e5b220e9d2b5c10e03102a03d427e038c344c0/include/fmt/xchar.h"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 2,
+			"component" : "fmt-core",
+			"destination" : "lib/cmake/fmt",
+			"paths" : 
+			[
+				"cmake-build-release-visual-studio/_deps/fmt-build/fmt-config.cmake",
+				"cmake-build-release-visual-studio/_deps/fmt-build/fmt-config-version.cmake"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 3,
+			"component" : "fmt-core",
+			"destination" : "lib/cmake/fmt",
+			"exportName" : "fmt-targets",
+			"exportTargets" : 
+			[
+				{
+					"id" : "fmt::@976f4f0bee90b99ecdb6",
+					"index" : 82
+				},
+				{
+					"id" : "fmt-header-only::@976f4f0bee90b99ecdb6",
+					"index" : 0
+				}
+			],
+			"paths" : 
+			[
+				"_deps/fmt-build/CMakeFiles/Export/b834597d9b1628ff12ae4314c3a2e4b8/fmt-targets.cmake"
+			],
+			"type" : "export"
+		},
+		{
+			"backtrace" : 4,
+			"component" : "fmt-core",
+			"destination" : "lib/pkgconfig",
+			"paths" : 
+			[
+				"cmake-build-release-visual-studio/_deps/fmt-build/fmt.pc"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "_deps/fmt-build",
+		"source" : "Build/Output/ExternalsCache/fmt/03e5b220e9d2b5c10e03102a03d427e038c344c0"
+	}
+}

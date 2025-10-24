@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "_deps/boostnowide-build",
+		"source" : "Build/Output/ExternalsCache/boostnowide/37e9d3853fc4a1e2de3eee207ea766555faa1c43"
+	}
+}
