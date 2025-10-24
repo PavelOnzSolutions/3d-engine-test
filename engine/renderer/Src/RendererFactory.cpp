@@ -4,6 +4,7 @@
 #include <Engine/Renderer/Core/Passes.h>
 #include <memory>
 #include <string>
+#include <cstdlib>
 
 namespace Engine::Renderer {
 
@@ -14,12 +15,16 @@ public:
     bool Initialize(void* /*windowHandle*/) override {
         m_ctx = std::make_unique<RenderContext>();
         m_frame_graph = std::make_unique<FrameGraph>();
-        // Build deferred rendering pipeline: Shadows -> G-Buffer -> Deferred Lighting -> Post -> Present
-        m_frame_graph->AddPass(std::make_shared<ShadowPass>());
-        m_frame_graph->AddPass(std::make_shared<GBufferPass>());
-        m_frame_graph->AddPass(std::make_shared<DeferredLightingPass>());
-        m_frame_graph->AddPass(std::make_shared<PostProcessPass>());
-        m_frame_graph->AddPass(std::make_shared<PresentPass>());
+        // Choose pipeline based on environment variable ENGINE_FORWARD_PLUS (1/true/yes to enable)
+        const bool use_forward_plus = []{
+            if (const char* env = std::getenv("ENGINE_FORWARD_PLUS"))
+                return env[0] == '1' || env[0] == 't' || env[0] == 'T' || env[0] == 'y' || env[0] == 'Y';
+            return false;
+        }();
+        if (use_forward_plus)
+            BuildForwardPlusPipeline(*m_frame_graph);
+        else
+            BuildDeferredPipeline(*m_frame_graph);
         m_frame_graph->Compile();
         return true;
     }
@@ -40,12 +45,16 @@ public:
     bool Initialize(void* /*windowHandle*/) override {
         m_ctx = std::make_unique<RenderContext>();
         m_frame_graph = std::make_unique<FrameGraph>();
-        // Build deferred rendering pipeline: Shadows -> G-Buffer -> Deferred Lighting -> Post -> Present
-        m_frame_graph->AddPass(std::make_shared<ShadowPass>());
-        m_frame_graph->AddPass(std::make_shared<GBufferPass>());
-        m_frame_graph->AddPass(std::make_shared<DeferredLightingPass>());
-        m_frame_graph->AddPass(std::make_shared<PostProcessPass>());
-        m_frame_graph->AddPass(std::make_shared<PresentPass>());
+        // Choose pipeline based on environment variable ENGINE_FORWARD_PLUS (1/true/yes to enable)
+        const bool use_forward_plus = []{
+            if (const char* env = std::getenv("ENGINE_FORWARD_PLUS"))
+                return env[0] == '1' || env[0] == 't' || env[0] == 'T' || env[0] == 'y' || env[0] == 'Y';
+            return false;
+        }();
+        if (use_forward_plus)
+            BuildForwardPlusPipeline(*m_frame_graph);
+        else
+            BuildDeferredPipeline(*m_frame_graph);
         m_frame_graph->Compile();
         return true;
     }
@@ -67,12 +76,16 @@ public:
         // Create a dummy RenderContext; real integration will pass Methane RHI objects
         m_ctx = std::make_unique<RenderContext>();
         m_frame_graph = std::make_unique<FrameGraph>();
-        // Build deferred rendering pipeline: Shadows -> G-Buffer -> Deferred Lighting -> Post -> Present
-        m_frame_graph->AddPass(std::make_shared<ShadowPass>());
-        m_frame_graph->AddPass(std::make_shared<GBufferPass>());
-        m_frame_graph->AddPass(std::make_shared<DeferredLightingPass>());
-        m_frame_graph->AddPass(std::make_shared<PostProcessPass>());
-        m_frame_graph->AddPass(std::make_shared<PresentPass>());
+        // Choose pipeline based on environment variable ENGINE_FORWARD_PLUS (1/true/yes to enable)
+        const bool use_forward_plus = []{
+            if (const char* env = std::getenv("ENGINE_FORWARD_PLUS"))
+                return env[0] == '1' || env[0] == 't' || env[0] == 'T' || env[0] == 'y' || env[0] == 'Y';
+            return false;
+        }();
+        if (use_forward_plus)
+            BuildForwardPlusPipeline(*m_frame_graph);
+        else
+            BuildDeferredPipeline(*m_frame_graph);
         m_frame_graph->Compile();
         return true;
     }
