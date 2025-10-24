@@ -14,9 +14,10 @@ public:
     bool Initialize(void* /*windowHandle*/) override {
         m_ctx = std::make_unique<RenderContext>();
         m_frame_graph = std::make_unique<FrameGraph>();
-        // Build example pipeline
+        // Build deferred rendering pipeline: Shadows -> G-Buffer -> Deferred Lighting -> Post -> Present
+        m_frame_graph->AddPass(std::make_shared<ShadowPass>());
         m_frame_graph->AddPass(std::make_shared<GBufferPass>());
-        m_frame_graph->AddPass(std::make_shared<LightingPass>());
+        m_frame_graph->AddPass(std::make_shared<DeferredLightingPass>());
         m_frame_graph->AddPass(std::make_shared<PostProcessPass>());
         m_frame_graph->AddPass(std::make_shared<PresentPass>());
         m_frame_graph->Compile();
@@ -39,8 +40,10 @@ public:
     bool Initialize(void* /*windowHandle*/) override {
         m_ctx = std::make_unique<RenderContext>();
         m_frame_graph = std::make_unique<FrameGraph>();
+        // Build deferred rendering pipeline: Shadows -> G-Buffer -> Deferred Lighting -> Post -> Present
+        m_frame_graph->AddPass(std::make_shared<ShadowPass>());
         m_frame_graph->AddPass(std::make_shared<GBufferPass>());
-        m_frame_graph->AddPass(std::make_shared<LightingPass>());
+        m_frame_graph->AddPass(std::make_shared<DeferredLightingPass>());
         m_frame_graph->AddPass(std::make_shared<PostProcessPass>());
         m_frame_graph->AddPass(std::make_shared<PresentPass>());
         m_frame_graph->Compile();
@@ -64,8 +67,10 @@ public:
         // Create a dummy RenderContext; real integration will pass Methane RHI objects
         m_ctx = std::make_unique<RenderContext>();
         m_frame_graph = std::make_unique<FrameGraph>();
+        // Build deferred rendering pipeline: Shadows -> G-Buffer -> Deferred Lighting -> Post -> Present
+        m_frame_graph->AddPass(std::make_shared<ShadowPass>());
         m_frame_graph->AddPass(std::make_shared<GBufferPass>());
-        m_frame_graph->AddPass(std::make_shared<LightingPass>());
+        m_frame_graph->AddPass(std::make_shared<DeferredLightingPass>());
         m_frame_graph->AddPass(std::make_shared<PostProcessPass>());
         m_frame_graph->AddPass(std::make_shared<PresentPass>());
         m_frame_graph->Compile();
