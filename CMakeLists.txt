@@ -37,8 +37,9 @@ target_include_directories(engine_renderer_abstraction
         INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/engine/renderer/Include)
 
 add_library(engine_renderer_factory STATIC
-        engine/renderer/Src/RendererFactory.cpp)
-target_link_libraries(engine_renderer_factory PUBLIC engine_renderer_abstraction)
+        engine/renderer/Src/RendererFactory.cpp
+        engine/renderer/Src/Core/FrameGraph.cpp)
+ target_link_libraries(engine_renderer_factory PUBLIC engine_renderer_abstraction)
 
 # Assets, Threading, Networking (headers-only for now)
 add_library(engine_assets INTERFACE)
