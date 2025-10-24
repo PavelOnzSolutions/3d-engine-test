@@ -1,4 +1,5 @@
 #include <Engine/Renderer/RendererFactory.h>
+#include <Engine/Renderer/RenderContext.h>
 #include <memory>
 #include <string>
 
@@ -22,9 +23,23 @@ public:
 
 class RendererMethaneStub : public IRenderer {
 public:
-    bool Initialize(void* /*windowHandle*/) override { return true; }
-    void RenderFrame() override {}
-    void Shutdown() override {}
+    bool Initialize(void* /*windowHandle*/) override {
+        // Create a dummy RenderContext; real integration will pass Methane RHI objects
+        m_ctx = std::make_unique<RenderContext>();
+        m_ctx->BeginFrame();
+        m_ctx->EndFrame();
+        return true;
+    }
+    void RenderFrame() override {
+        if (m_ctx && !m_ctx->IsFrameRecording()) {
+            m_ctx->BeginFrame();
+            // ... record commands when integrated ...
+            m_ctx->EndFrame();
+        }
+    }
+    void Shutdown() override { m_ctx.reset(); }
+private:
+    std::unique_ptr<RenderContext> m_ctx;
 };
 
 } // anonymous namespace

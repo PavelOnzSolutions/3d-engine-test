@@ -81,6 +81,8 @@ if(USE_METHANEKIT)
         GIT_TAG v0.8.1
     )
     FetchContent_MakeAvailable(MethaneKit)
+    # Define a project-wide macro to enable Methane-backed wrappers in headers
+    target_compile_definitions(engine_renderer_abstraction INTERFACE ENGINE_USE_METHANEKIT)
     # Link your renderer implementations with MethaneKit targets when enabling real integration.
 endif()
 
