@@ -16,8 +16,14 @@ This is not a production-ready engine. It is a sandbox for exploring concepts an
   - Logging parameters
 - Simple logger with rolling behavior (max file size / count)
 - Iterative CMake build that pulls in third-party libraries required by the backends
+- RendererCore: minimal FrameGraph + IRenderPass abstraction at engine level
+- Example passes: GBuffer, Lighting, PostProcess, Present
+- Integrated into DX12/Vulkan/Methane stubs; graph compiles once and executes each frame within a RenderContext begin/end scope
 
 ---
+
+## Short Summary
+- Added a header-only ResourceManager with thread-safe caching for textures, meshes, and shaders; uses AssetLoader on cache misses. No CMake changes required.
 
 ## Repository Layout
 - main.cpp – WinMain, creates window, loads config, sets up logging, creates and drives the renderer
