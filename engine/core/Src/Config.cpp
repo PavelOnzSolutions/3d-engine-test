@@ -43,6 +43,19 @@ static std::string NormalizeRenderer(std::string s)
     return s;
 }
 
+static std::string Unquote(std::string v)
+{
+    v = Trim(v);
+    if (v.size() >= 2)
+    {
+        char f = v.front();
+        char b = v.back();
+        if ((f == '"' && b == '"') || (f == '\'' && b == '\''))
+            return v.substr(1, v.size() - 2);
+    }
+    return v;
+}
+
 bool Config::LoadFromIni(VideoConfig& outVideo)
 {
     std::ifstream file("3DEngineTest.ini");
@@ -159,6 +172,63 @@ bool Config::LoadLoggingFromIni(LoggingConfig& outLogging)
             else if (key == "maxfilecount" || key == "max_file_count" || key == "max_count")
             {
                 try { outLogging.max_file_count = std::max(1, std::stoi(val)); anyParsed = true; } catch (...) {}
+            }
+        }
+    }
+
+    return anyParsed;
+}
+
+bool Config::LoadEngineFromIni(EngineConfig& outEngine)
+{
+    std::ifstream file("3DEngineTest.ini");
+    if (!file.is_open())
+        return false;
+
+    bool anyParsed = false;
+    std::string line;
+    std::string currentSection;
+
+    while (std::getline(file, line))
+    {
+        // Remove comments
+        auto scPos = line.find(';');
+        if (scPos != std::string::npos) line = line.substr(0, scPos);
+        auto hashPos = line.find('#');
+        if (hashPos != std::string::npos) line = line.substr(0, hashPos);
+
+        line = Trim(line);
+        if (line.empty()) continue;
+
+        if (line.front() == '[' && line.back() == ']')
+        {
+            currentSection = ToLower(Trim(line.substr(1, line.size() - 2)));
+            continue;
+        }
+
+        auto eqPos = line.find('=');
+        if (eqPos == std::string::npos) continue;
+
+        std::string key = ToLower(Trim(line.substr(0, eqPos)));
+        std::string val = Trim(line.substr(eqPos + 1));
+
+        if (currentSection == "engine")
+        {
+            if (key == "dirmodels")
+            {
+                outEngine.dirModels = Unquote(val); anyParsed = true;
+            }
+            else if (key == "dirtextures")
+            {
+                outEngine.dirTextures = Unquote(val); anyParsed = true;
+            }
+            else if (key == "dirsounds")
+            {
+                outEngine.dirSounds = Unquote(val); anyParsed = true;
+            }
+            else if (key == "dirscenes")
+            {
+                outEngine.dirScenes = Unquote(val); anyParsed = true;
             }
         }
     }

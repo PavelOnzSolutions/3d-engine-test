@@ -5,6 +5,8 @@
 #include <Engine/Core/Logger.h>
 #include <Engine/Renderer/RendererFactory.h>
 #include <sstream>
+#include <chrono>
+#include <iomanip>
 
 using Engine::Core::Config;
 using Engine::Core::VideoConfig;
@@ -29,7 +31,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         PostQuitMessage(0);
         return 0;
     default:
-        return DefWindowProc(hWnd, message, wParam, lParam);
+        return DefWindowProcW(hWnd, message, wParam, lParam);
     }
 }
 
@@ -61,7 +63,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
     wc.lpfnWndProc   = WndProc;
     wc.hInstance     = hInstance;
     wc.lpszClassName = CLASS_NAME;
-    wc.hCursor       = LoadCursor(nullptr, IDC_ARROW);
+    wc.hCursor       = LoadCursorW(nullptr, MAKEINTRESOURCEW(32512));
 
     RegisterClassW(&wc);
 
@@ -76,10 +78,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
         height = GetSystemMetrics(SM_CYSCREEN);
     }
 
-    // Title reflects renderer choice
-    std::wstring title = L"3D Engine - ";
-    std::wstring wrenderer(videoCfg.renderer.begin(), videoCfg.renderer.end());
-    title += wrenderer + L" renderer";
+    // Initial window title
+    std::wstring title = L"3DEngineTest - FPS: 0";
 
     HWND hWnd = CreateWindowExW(
         0,
@@ -102,6 +102,13 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
 
     ShowWindow(hWnd, videoCfg.fullscreen ? SW_SHOWMAXIMIZED : nCmdShow);
     UpdateWindow(hWnd);
+
+    // Force-set initial title in case the system or frameworks override it
+    if (!SetWindowTextW(hWnd, L"3DEngineTest - FPS: 0"))
+    {
+        DWORD err = GetLastError();
+        Engine::Core::Logger::Info(std::string("SetWindowTextW initial title failed with error ") + std::to_string(static_cast<unsigned long>(err)));
+    }
 
     // Create renderer based on INI setting
     Engine::Core::Logger::Info(std::string("Requested renderer: ") + videoCfg.renderer);
@@ -127,20 +134,42 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
         else
         {
             Engine::Core::Logger::Info(std::string("Renderer initialized successfully: ") + activeRenderer);
-            Engine::Core::Logger::Info("Note: Current visuals are drawn with a temporary Win32 GDI path (software). Direct3D/Vulkan backends are stubs and do not issue real GPU API draws yet.");
         }
     }
 
     // Basic message loop
     Engine::Core::Logger::Info("Entering message loop...");
+
+    using Clock = std::chrono::steady_clock;
+    auto last_time = Clock::now();
+    int frame_count = 0;
+    double current_fps = 0.0;
+
     MSG msg{};
-    while (GetMessage(&msg, nullptr, 0, 0))
+    while (GetMessageW(&msg, nullptr, 0, 0))
     {
         TranslateMessage(&msg);
-        DispatchMessage(&msg);
+        DispatchMessageW(&msg);
 
         if (renderer)
             renderer->RenderFrame();
+
+        // FPS accounting
+        ++frame_count;
+        auto now = Clock::now();
+        std::chrono::duration<double> elapsed = now - last_time;
+        if (elapsed.count() >= 1.0)
+        {
+            current_fps = frame_count / elapsed.count();
+            std::wstringstream wss;
+            wss.setf(std::ios::fixed);
+            wss << L"3DEngineTest - FPS: " << static_cast<int>(current_fps + 0.5);
+            SetWindowTextW(hWnd, wss.str().c_str());
+
+            // reset
+            frame_count = 0;
+            last_time = now;
+        }
     }
     Engine::Core::Logger::Info(std::string("Message loop exited with code ") + std::to_string(static_cast<int>(msg.wParam)));
 
