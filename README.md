@@ -120,6 +120,11 @@ Many of these are included for experimentation and may evolve as the PoC changes
 ## Current Status and Roadmap
 Status: Basic window creation, configuration, logging, and renderer backend scaffolding are in place. Rendering loop calls into backend each frame.
 
+### Current Rendering Status
+- The DX12 and Vulkan backends are scaffolds/stubs at this stage. Visuals you see on screen (black background and rotating wireframe cube) are drawn via a temporary Win32 GDI path from within the renderer stubs to provide immediate feedback.
+- No real Direct3D 12 or Vulkan draw calls are issued yet. The FrameGraph/RenderPass structure is present and executed each frame, and will host actual GPU rendering in future iterations.
+- You can switch the selected backend in 3DEngineTest.ini; the window title and logs will reflect your choice, but the visual output remains the same GDI-based preview for now.
+
 Possible next steps (learning-oriented):
 - Input handling and basic camera controls
 - Swap chain and frame pacing improvements

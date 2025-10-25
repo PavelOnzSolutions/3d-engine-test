@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <memory>
+#include <vector>
 
 namespace Engine::Assets {
 
@@ -16,6 +17,17 @@ struct Mesh
 {
     std::string id;
     std::string path;
+
+    // Minimal geometry containers for meshes. These can be filled by loaders
+    // (e.g., glTF) and then consumed by renderer backends.
+    std::vector<float>    positions; // x,y,z triples
+    std::vector<float>    normals;   // x,y,z triples
+    std::vector<float>    texcoords; // u,v pairs
+    std::vector<uint32_t> indices;   // triangle indices
+
+    // Metadata
+    size_t primitive_count = 0;
+    bool   is_gltf = false;
 };
 
 struct Shader

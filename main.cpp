@@ -15,6 +15,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
+    case WM_PAINT:
+    {
+        PAINTSTRUCT ps;
+        HDC hdc = BeginPaint(hWnd, &ps);
+        HBRUSH hbr = (HBRUSH)GetStockObject(BLACK_BRUSH);
+        FillRect(hdc, &ps.rcPaint, hbr);
+        EndPaint(hWnd, &ps);
+        return 0;
+    }
     case WM_DESTROY:
         Engine::Core::Logger::Info("Window destroy requested. Posting quit message.");
         PostQuitMessage(0);
@@ -118,6 +127,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
         else
         {
             Engine::Core::Logger::Info(std::string("Renderer initialized successfully: ") + activeRenderer);
+            Engine::Core::Logger::Info("Note: Current visuals are drawn with a temporary Win32 GDI path (software). Direct3D/Vulkan backends are stubs and do not issue real GPU API draws yet.");
         }
     }
 

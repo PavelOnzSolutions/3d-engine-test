@@ -59,16 +59,26 @@ public:
             return mesh;
 
         std::unique_lock lock(m_mutex);
-        auto it = m_meshes.find(key);
-        if (it != m_meshes.end())
+        if (auto it = m_meshes.find(key); it != m_meshes.end())
             return it->second;
 
+        // First try to load as glTF (.gltf/.glb)
+        Mesh temp_mesh;
+        if (m_loader.LoadGltfMesh(path, temp_mesh))
+        {
+            temp_mesh.id = key;
+            auto mesh_ptr = std::make_shared<Mesh>(std::move(temp_mesh));
+            m_meshes.emplace(key, mesh_ptr);
+            return mesh_ptr;
+        }
+
+        // Fallback to legacy generic model loader
         if (!m_loader.LoadModel(path))
             return {};
 
-        auto mesh = std::make_shared<Mesh>(Mesh{ key, path });
-        m_meshes.emplace(key, mesh);
-        return mesh;
+        auto mesh_ptr = std::make_shared<Mesh>(Mesh{ key, path });
+        m_meshes.emplace(key, mesh_ptr);
+        return mesh_ptr;
     }
 
     bool UnloadMesh(const std::string& path)
