@@ -18,6 +18,7 @@ struct EngineConfig {
     std::string dirTextures; // e.g., path to textures root
     std::string dirSounds;   // e.g., path to sounds root
     std::string dirScenes;   // e.g., path to scenes root
+    std::string startupScene; // scene file name to load on startup (e.g., "Sponza.glb")
 };
 
 class Config {

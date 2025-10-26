@@ -230,6 +230,10 @@ bool Config::LoadEngineFromIni(EngineConfig& outEngine)
             {
                 outEngine.dirScenes = Unquote(val); anyParsed = true;
             }
+            else if (key == "startupscene" || key == "startscene" || key == "scene")
+            {
+                outEngine.startupScene = Unquote(val); anyParsed = true;
+            }
         }
     }
 

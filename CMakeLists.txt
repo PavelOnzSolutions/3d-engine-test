@@ -42,9 +42,13 @@ add_library(engine_renderer_factory STATIC
  target_link_libraries(engine_renderer_factory PUBLIC engine_renderer_abstraction)
 
 # Assets, Threading, Networking (headers-only for now)
-add_library(engine_assets INTERFACE)
+add_library(engine_assets STATIC
+        engine/assets/Src/SceneLoader.cpp)
+
 target_include_directories(engine_assets
-        INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/engine/assets/Include)
+        PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/engine/assets/Include)
+
+target_link_libraries(engine_assets PUBLIC engine_core)
 
 add_library(engine_threading INTERFACE)
 target_include_directories(engine_threading
@@ -87,11 +91,39 @@ if(USE_METHANEKIT)
     # Link your renderer implementations with MethaneKit targets when enabling real integration.
 endif()
 
+include(FetchContent)
+
+# Fetch GLM
+FetchContent_Declare(
+        glm
+        GIT_REPOSITORY https://github.com/g-truc/glm.git
+        GIT_TAG 1.0.1   # Replace with latest stable tag
+)
+
+FetchContent_MakeAvailable(glm)
+
+# EnTT ECS library via FetchContent (always available)
+include(FetchContent)
+FetchContent_Declare(
+        entt
+        GIT_REPOSITORY https://github.com/skypjack/entt.git
+        GIT_TAG v3.13.0 # or latest stable
+)
+FetchContent_MakeAvailable(entt)
+
+
+
 # App executable showing an empty window
 add_executable(3DEngineTest WIN32
-        main.cpp)
+        main.cpp
+        engine/ecs/Include/Components.h
+        engine/ecs/Include/Systems.h
+        engine/ecs/Src/Systems.cpp
+)
 
 target_link_libraries(3DEngineTest PRIVATE
+        EnTT::EnTT
+        glm::glm
         engine_core
         engine_renderer_abstraction
         engine_renderer_factory

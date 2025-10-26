@@ -8,6 +8,7 @@
 #include <cstdlib>
 #include <cmath>
 #include <windows.h>
+#include <cstring>
 
 namespace Engine::Renderer {
 
@@ -18,14 +19,25 @@ static Mat4 Identity4()
     Mat4 m{}; m.m[0]=1; m.m[5]=1; m.m[10]=1; m.m[15]=1; return m;
 }
 
-// Minimal helper to draw a rotating wireframe cube using Win32 GDI
-static void DrawWireCube(HWND hwnd, float angle_rad)
+// Helper: convert UTF-8 string to wide string for Win32 APIs
+static std::wstring Utf8ToWide(const char* utf8)
+{
+    if (!utf8) return L"";
+    int len = static_cast<int>(strlen(utf8));
+    if (len <= 0) return L"";
+    int wlen = MultiByteToWideChar(CP_UTF8, 0, utf8, len, nullptr, 0);
+    if (wlen <= 0) return L"";
+    std::wstring wstr(static_cast<size_t>(wlen), L'\0');
+    MultiByteToWideChar(CP_UTF8, 0, utf8, len, wstr.data(), wlen);
+    return wstr;
+}
+
+// Minimal helper to draw a scene banner using Win32 GDI instead of rotating cube
+static void DrawSceneBanner(HWND hwnd, const wchar_t* scene_path)
 {
     if (!hwnd) return;
     RECT rc{};
     if (!GetClientRect(hwnd, &rc)) return;
-    const int width = rc.right - rc.left;
-    const int height = rc.bottom - rc.top;
 
     HDC hdc = GetDC(hwnd);
     if (!hdc) return;
@@ -34,68 +46,33 @@ static void DrawWireCube(HWND hwnd, float angle_rad)
     HBRUSH hbr = (HBRUSH)GetStockObject(BLACK_BRUSH);
     FillRect(hdc, &rc, hbr);
 
-    // Setup white pen
-    HPEN pen = CreatePen(PS_SOLID, 1, RGB(255,255,255));
-    HGDIOBJ old_pen = SelectObject(hdc, pen);
+    SetBkMode(hdc, TRANSPARENT);
+    SetTextColor(hdc, RGB(200, 240, 200));
 
-    // Simple 3D cube vertices (-1..1)
-    struct Vec3f { float x,y,z; };
-    Vec3f v[8] = {
-        {-1,-1,-1},{1,-1,-1},{1,1,-1},{-1,1,-1}, // back face
-        {-1,-1, 1},{1,-1, 1},{1,1, 1},{-1,1, 1}  // front face
-    };
+    std::wstring line1 = L"Rendering GLB Scene";
+    std::wstring line2 = scene_path && scene_path[0] ? scene_path : L"(no scene set)";
 
-    const float c = std::cos(angle_rad);
-    const float s = std::sin(angle_rad);
+    HFONT hFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
+    HGDIOBJ oldFont = SelectObject(hdc, hFont);
 
-    // Rotate around Y then X to make it interesting
-    auto rot_apply = [&](const Vec3f& a){
-        // Y rotation
-        float x1 = a.x*c + a.z*s;
-        float z1 = -a.x*s + a.z*c;
-        float y1 = a.y;
-        // X rotation (slower)
-        float cx = std::cos(angle_rad*0.7f);
-        float sx = std::sin(angle_rad*0.7f);
-        float y2 = y1*cx - z1*sx;
-        float z2 = y1*sx + z1*cx;
-        return Vec3f{ x1, y2, z2 };
-    };
+    RECT rcText = rc;
+    rcText.top += 20;
+    DrawTextW(hdc, line1.c_str(), (int)line1.size(), &rcText, DT_CENTER | DT_TOP | DT_SINGLELINE);
+    rcText.top += 30;
+    DrawTextW(hdc, line2.c_str(), (int)line2.size(), &rcText, DT_CENTER | DT_TOP | DT_SINGLELINE | DT_PATH_ELLIPSIS);
 
-    // Project to 2D (simple perspective)
-    POINT pts[8];
-    const float fov = 1.1f; // in radians, approx 63 deg
-    const float f = 1.0f / std::tan(fov*0.5f);
-    const float aspect = width > 0 ? (float)width / (float)height : 1.0f;
-    const float z_cam = 3.0f; // camera distance
-
-    for (int i=0;i<8;++i)
-    {
-        Vec3f r = rot_apply(v[i]);
-        // move cube forward
-        r.z += z_cam;
-        float px = (r.x * f / aspect) / r.z;
-        float py = (r.y * f) / r.z;
-        int sx = (int)((px * 0.5f + 0.5f) * width);
-        int sy = (int)((-py * 0.5f + 0.5f) * height);
-        pts[i].x = rc.left + sx;
-        pts[i].y = rc.top + sy;
-    }
-
-    auto line = [&](int a, int b){ MoveToEx(hdc, pts[a].x, pts[a].y, nullptr); LineTo(hdc, pts[b].x, pts[b].y); };
-    // Draw edges
-    line(0,1); line(1,2); line(2,3); line(3,0); // back
-    line(4,5); line(5,6); line(6,7); line(7,4); // front
-    line(0,4); line(1,5); line(2,6); line(3,7); // sides
-
-    // Cleanup
-    SelectObject(hdc, old_pen);
-    DeleteObject(pen);
+    SelectObject(hdc, oldFont);
     ReleaseDC(hwnd, hdc);
 }
 
+// Global scene path used by stub banner rendering
+static std::wstring g_scene_path;
+// Redirect cube drawing to scene banner for all stubs
+#define DrawWireCube(hwnd, angle_rad) DrawSceneBanner(hwnd, g_scene_path.c_str())
+
 class RendererDX12Stub : public IRenderer {
 public:
+    void SetScenePath(const char* scene_path_utf8) override { g_scene_path = Utf8ToWide(scene_path_utf8); }
     bool Initialize(void* windowHandle) override {
         m_hwnd = static_cast<HWND>(windowHandle);
         m_ctx = std::make_unique<RenderContext>();
@@ -150,6 +127,7 @@ private:
 
 class RendererVulkanStub : public IRenderer {
 public:
+    void SetScenePath(const char* scene_path_utf8) override { g_scene_path = Utf8ToWide(scene_path_utf8); }
     bool Initialize(void* windowHandle) override {
         m_hwnd = static_cast<HWND>(windowHandle);
         m_ctx = std::make_unique<RenderContext>();
@@ -201,6 +179,7 @@ private:
 
 class RendererMethaneStub : public IRenderer {
 public:
+    void SetScenePath(const char* scene_path_utf8) override { g_scene_path = Utf8ToWide(scene_path_utf8); }
     bool Initialize(void* windowHandle) override {
         m_hwnd = static_cast<HWND>(windowHandle);
         // Create a dummy RenderContext; real integration will pass Methane RHI objects

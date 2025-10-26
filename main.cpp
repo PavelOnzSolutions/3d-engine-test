@@ -1,3 +1,4 @@
+#define NOMINMAX
 #include <windows.h>
 #include <string>
 #include <memory>
@@ -7,9 +8,16 @@
 #include <sstream>
 #include <chrono>
 #include <iomanip>
+#include <algorithm>
+#include <vector>
+#include <entt/entt.hpp>
+#include <Engine/Assets/SceneLoader.h>
+#include "engine/ecs/Include/Components.h"
+#include "engine/ecs/Include/Systems.h"
 
 using Engine::Core::Config;
 using Engine::Core::VideoConfig;
+using Engine::Core::EngineConfig;
 using Engine::Renderer::IRenderer;
 using Engine::Renderer::CreateRenderer;
 
@@ -56,6 +64,28 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
         std::string("Logging config: MaxFileSizeMB=") + std::to_string(logCfg.max_file_size_mb) +
         ", MaxFileCount=" + std::to_string(logCfg.max_file_count)
     );
+
+    // Load engine directories and startup scene
+    EngineConfig engineCfg;
+    Config::LoadEngineFromIni(engineCfg);
+    Engine::Core::Logger::Info(std::string("Engine directories: models=") + engineCfg.dirModels +
+                               ", textures=" + engineCfg.dirTextures +
+                               ", sounds=" + engineCfg.dirSounds +
+                               ", scenes=" + engineCfg.dirScenes);
+    if (!engineCfg.startupScene.empty())
+        Engine::Core::Logger::Info(std::string("StartupScene=") + engineCfg.startupScene);
+    else
+        Engine::Core::Logger::Info("StartupScene not specified; will continue with an empty scene");
+
+    // Attempt to load startup scene using stub loader
+    Engine::Assets::LoadedScene loadedScene{};
+    std::vector<std::string> loadWarnings;
+    if (!engineCfg.startupScene.empty())
+    {
+        Engine::Assets::LoadScene(engineCfg, engineCfg.startupScene, loadedScene, loadWarnings);
+        for (const auto& w : loadWarnings)
+            Engine::Core::Logger::Info(std::string("[SceneLoader] ") + w);
+    }
 
     const wchar_t CLASS_NAME[] = L"EngineWindowClass";
 
@@ -124,6 +154,10 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
 
     if (renderer)
     {
+        // Provide scene path (if any) to the renderer prior to initialization.
+        if (!loadedScene.scene_path.empty())
+            renderer->SetScenePath(loadedScene.scene_path.c_str());
+
         Engine::Core::Logger::Info(std::string("Initializing renderer backend: ") + activeRenderer + "...");
         bool init_ok = renderer->Initialize(static_cast<void*>(hWnd));
         if (!init_ok)
@@ -142,8 +176,30 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
 
     using Clock = std::chrono::steady_clock;
     auto last_time = Clock::now();
+    auto last_frame_time = Clock::now();
     int frame_count = 0;
     double current_fps = 0.0;
+
+    // ECS world setup
+    entt::registry registry;
+    const auto entity = registry.create();
+    registry.emplace<Transform>(entity, Transform{});
+    registry.emplace<Velocity>(entity, Velocity{ glm::vec3(1.f, 0.f, 0.f) }); // move along +X at 1 unit/sec
+
+    // Instantiate additional entities based on loaded scene stub (excluding the first one we already created)
+    if (loadedScene.nodes_count > 1)
+    {
+        entt::entity parent = entity;
+        for (int i = 1; i < loadedScene.nodes_count; ++i)
+        {
+            auto e = registry.create();
+            registry.emplace<Transform>(e, Transform{});
+            registry.emplace<Parent>(e, Parent{ parent });
+            // Attach a MeshRenderer with placeholder indices
+            registry.emplace<MeshRenderer>(e, MeshRenderer{ i - 1, i - 1 });
+            parent = e; // chain as a simple linear hierarchy for demo
+        }
+    }
 
     MSG msg{};
     while (GetMessageW(&msg, nullptr, 0, 0))
@@ -151,6 +207,15 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
         TranslateMessage(&msg);
         DispatchMessageW(&msg);
 
+        // Per-frame delta time
+        auto frame_now = Clock::now();
+        std::chrono::duration<float> frame_dt = frame_now - last_frame_time;
+        last_frame_time = frame_now;
+
+        // Update ECS systems
+        UpdateMovement(registry, std::max(0.0f, frame_dt.count()));
+
+        // Optional: log the first entity position occasionally (every second via FPS block)
         if (renderer)
             renderer->RenderFrame();
 
@@ -165,6 +230,17 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
             wss.setf(std::ios::fixed);
             wss << L"3DEngineTest - FPS: " << static_cast<int>(current_fps + 0.5);
             SetWindowTextW(hWnd, wss.str().c_str());
+
+            // Debug: report entity position to log
+            if (registry.valid(entity))
+            {
+                const auto &t = registry.get<Transform>(entity);
+                std::ostringstream oss;
+                oss.setf(std::ios::fixed);
+                oss.precision(2);
+                oss << "ECS Transform: x=" << t.position.x << ", y=" << t.position.y << ", z=" << t.position.z;
+                Engine::Core::Logger::Info(oss.str());
+            }
 
             // reset
             frame_count = 0;
