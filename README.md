@@ -23,7 +23,8 @@ This is not a production-ready engine. It is a sandbox for exploring concepts an
 ---
 
 ## Short Summary
-- Added a header-only ResourceManager with thread-safe caching for textures, meshes, and shaders; uses AssetLoader on cache misses. No CMake changes required.
+- Header-only ResourceManager with thread-safe caching for textures, meshes, and shaders; uses AssetLoader on cache misses. No CMake changes required.
+- Added a simple SceneLoader stub for glTF (.glb/.gltf): resolves scene path from [Engine] dirs, verifies existence, and provides minimal counts for demo logging.
 
 ## Repository Layout
 - main.cpp – WinMain, creates window, loads config, sets up logging, creates and drives the renderer
@@ -70,6 +71,7 @@ Note: External dependencies (e.g., DirectX-related, MethaneKit subcomponents, fm
 Run the 3DEngineTest executable produced by your chosen profile. The application:
 - Loads settings from 3DEngineTest.ini
 - Initializes logging
+- Optionally resolves and loads a startup scene via SceneLoader (see [Engine] settings)
 - Creates a Win32 window with a title reflecting the chosen renderer
 - Initializes the selected renderer backend
 - Enters a simple message loop and calls RenderFrame on each iteration
@@ -88,8 +90,17 @@ Key sections/fields:
   - width: integer (windowed mode)
   - height: integer (windowed mode)
 - [Logging]
-  - max_file_size_mb: integer
-  - max_file_count: integer
+  - max_file_size_mb: integer (aliases: maxfilesizemb, max_size_mb)
+  - max_file_count: integer (aliases: maxfilecount, max_count)
+- [Engine]
+  - dirModels: path to models root
+  - dirTextures: path to textures root
+  - dirSounds: path to sounds root
+  - dirScenes: path to scenes root
+  - startupScene: file name of the scene to load on startup (aliases: startScene, scene)
+    - If no extension is provided, .glb is assumed; .gltf is also supported
+    - If dirScenes is set, startupScene is resolved relative to that directory
+    - If the file is missing or not a glTF, the app logs a warning and continues with an empty scene
 
 The main program logs a summary of loaded configuration values at startup.
 

@@ -2,7 +2,10 @@
 
 All notable changes are listed below based on the last 10 commits in this repository. Entries are ordered from newest to oldest.
 
-Generated on: 2025-10-25
+Generated on: 2025-10-26
+
+## 2025-10-26
+- Maintenance — Updated README and CHANGELOG to reflect current engine features and configuration.
 
 ## 2025-10-25
 - 020ce84 — wide char usage (by Pavel Onz)
