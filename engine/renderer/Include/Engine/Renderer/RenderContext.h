@@ -37,6 +37,10 @@ public:
         , m_program_bindings(std::move(program_bindings))
     {}
 
+    // Initialize Methane render context from a Win32 window handle and desired frame size.
+    // Returns true on success.
+    bool InitializeFromWindowHandle(void* hwnd, uint32_t width, uint32_t height) noexcept;
+
     void SetCommandList(std::shared_ptr<CommandList> cmd_list) { m_cmd_list = std::move(cmd_list); }
     void SetProgramBindings(std::shared_ptr<ProgramBindings> bindings) { m_program_bindings = std::move(bindings); }
 
@@ -50,12 +54,15 @@ public:
 
     bool IsValid() const noexcept { return static_cast<bool>(m_methane_render_ctx); }
     bool IsFrameRecording() const noexcept { return m_frame_started; }
+    // Present current frame via underlying API (Methane when available)
+    void Present() noexcept;
 #else
     // Stubs when MethaneKit is not enabled in the build
     void BeginFrame() noexcept { m_frame_started = true; }
     void EndFrame() noexcept { m_frame_started = false; }
     bool IsValid() const noexcept { return false; }
     bool IsFrameRecording() const noexcept { return m_frame_started; }
+    void Present() noexcept {} // no-op when Methane is disabled
 #endif
 
 private:

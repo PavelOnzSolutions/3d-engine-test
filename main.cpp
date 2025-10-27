@@ -25,12 +25,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
+    case WM_ERASEBKGND:
+        // Prevent background erasing to avoid flicker and black clears between frames
+        return 1;
     case WM_PAINT:
     {
+        // Validate the paint without clearing the background; the renderer draws the frame
         PAINTSTRUCT ps;
-        HDC hdc = BeginPaint(hWnd, &ps);
-        HBRUSH hbr = (HBRUSH)GetStockObject(BLACK_BRUSH);
-        FillRect(hdc, &ps.rcPaint, hbr);
+        BeginPaint(hWnd, &ps);
         EndPaint(hWnd, &ps);
         return 0;
     }
@@ -108,8 +110,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
         height = GetSystemMetrics(SM_CYSCREEN);
     }
 
-    // Initial window title
-    std::wstring title = L"3DEngineTest - FPS: 0";
+    // Initial window title (static; FPS moved into viewport overlay)
+    std::wstring title = L"3DEngineTest";
 
     HWND hWnd = CreateWindowExW(
         0,
@@ -133,12 +135,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
     ShowWindow(hWnd, videoCfg.fullscreen ? SW_SHOWMAXIMIZED : nCmdShow);
     UpdateWindow(hWnd);
 
-    // Force-set initial title in case the system or frameworks override it
-    if (!SetWindowTextW(hWnd, L"3DEngineTest - FPS: 0"))
-    {
-        DWORD err = GetLastError();
-        Engine::Core::Logger::Info(std::string("SetWindowTextW initial title failed with error ") + std::to_string(static_cast<unsigned long>(err)));
-    }
+    // Ensure static title is set
+    SetWindowTextW(hWnd, L"3DEngineTest");
 
     // Create renderer based on INI setting
     Engine::Core::Logger::Info(std::string("Requested renderer: ") + videoCfg.renderer);
@@ -179,6 +177,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
     auto last_frame_time = Clock::now();
     int frame_count = 0;
     double current_fps = 0.0;
+    std::wstring fps_text = L"FPS: 0";
 
     // ECS world setup
     entt::registry registry;
@@ -202,10 +201,22 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
     }
 
     MSG msg{};
-    while (GetMessageW(&msg, nullptr, 0, 0))
+    bool running = true;
+    while (running)
     {
-        TranslateMessage(&msg);
-        DispatchMessageW(&msg);
+        // Process all pending window messages without blocking
+        while (PeekMessageW(&msg, nullptr, 0, 0, PM_REMOVE))
+        {
+            if (msg.message == WM_QUIT)
+            {
+                running = false;
+                break;
+            }
+            TranslateMessage(&msg);
+            DispatchMessageW(&msg);
+        }
+        if (!running)
+            break;
 
         // Per-frame delta time
         auto frame_now = Clock::now();
@@ -215,9 +226,37 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
         // Update ECS systems
         UpdateMovement(registry, std::max(0.0f, frame_dt.count()));
 
-        // Optional: log the first entity position occasionally (every second via FPS block)
+        // Render a frame
         if (renderer)
             renderer->RenderFrame();
+
+        // Draw overlays: FPS (top-right), and scene status (top-left if missing)
+        {
+            RECT rc{}; GetClientRect(hWnd, &rc);
+            const int padding = 10;
+            HDC hdc = GetDC(hWnd);
+            if (hdc)
+            {
+                SetBkMode(hdc, TRANSPARENT);
+                SetTextColor(hdc, RGB(255,255,255));
+                // FPS at top-right
+                RECT tr{ rc.right - 200 - padding, rc.top + padding, rc.right - padding, rc.top + 50 };
+                DrawTextW(hdc, fps_text.c_str(), static_cast<int>(fps_text.size()), &tr, DT_RIGHT | DT_TOP | DT_SINGLELINE | DT_NOPREFIX);
+
+                // Scene status at top-left if scene missing
+                if (loadedScene.nodes_count == 0 && !loadedScene.scene_path.empty())
+                {
+                    std::wstring ws = L"Scene not found: ";
+                    int wlen = MultiByteToWideChar(CP_UTF8, 0, loadedScene.scene_path.c_str(), (int)loadedScene.scene_path.size(), nullptr, 0);
+                    std::wstring wpath((size_t)wlen, L'\0');
+                    MultiByteToWideChar(CP_UTF8, 0, loadedScene.scene_path.c_str(), (int)loadedScene.scene_path.size(), wpath.data(), wlen);
+                    ws += wpath;
+                    RECT tl{ rc.left + padding, rc.top + padding, rc.left + padding + 600, rc.top + 60 };
+                    DrawTextW(hdc, ws.c_str(), static_cast<int>(ws.size()), &tl, DT_LEFT | DT_TOP | DT_SINGLELINE | DT_NOPREFIX | DT_END_ELLIPSIS);
+                }
+                ReleaseDC(hWnd, hdc);
+            }
+        }
 
         // FPS accounting
         ++frame_count;
@@ -226,10 +265,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
         if (elapsed.count() >= 1.0)
         {
             current_fps = frame_count / elapsed.count();
+            // Update on-screen FPS text once per second
             std::wstringstream wss;
             wss.setf(std::ios::fixed);
-            wss << L"3DEngineTest - FPS: " << static_cast<int>(current_fps + 0.5);
-            SetWindowTextW(hWnd, wss.str().c_str());
+            wss << L"FPS: " << static_cast<int>(current_fps + 0.5);
+            fps_text = wss.str();
 
             // Debug: report entity position to log
             if (registry.valid(entity))
@@ -246,6 +286,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
             frame_count = 0;
             last_time = now;
         }
+
+        // Small sleep to avoid 100% CPU on very fast loops
+        Sleep(1);
     }
     Engine::Core::Logger::Info(std::string("Message loop exited with code ") + std::to_string(static_cast<int>(msg.wParam)));
 

@@ -126,13 +126,8 @@ public:
     const char* GetName() const override { return "PresentPass"; }
     void Setup(FrameGraph& /*fg*/) override {}
     void Execute(RenderContext& ctx, FrameGraph& /*fg*/) override {
-        (void)ctx;
-        // Placeholder: present swap chain
-#if defined(ENGINE_USE_METHANEKIT)
-        if (ctx.IsValid()) {
-            // TODO: transition LDRColor to present and present the frame
-        }
-#endif
+        // Present the frame using the active render context (Methane when available)
+        ctx.Present();
     }
 };
 

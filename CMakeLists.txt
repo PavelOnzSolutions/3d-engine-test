@@ -10,9 +10,17 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+# Workaround for external dependency warning treated as error in fmt when building MethaneKit
+# Suppress MSVC warning C4459 (declaration hides global) globally so external projects don't fail with /WX
+if(MSVC)
+    add_compile_options(/wd4459)
+endif()
+
 option(ENGINE_WITH_DX12 "Enable DirectX 12 renderer backend" ON)
 option(ENGINE_WITH_VULKAN "Enable Vulkan renderer backend" ON)
-option(USE_METHANEKIT "Fetch and integrate MethaneKit (optional)" ON)
+option(USE_METHANEKIT "Fetch and integrate MethaneKit (optional)" OFF)
+# Disable MethaneKit by default; use pure Direct3D 12 path for Windows builds
+set(USE_METHANEKIT OFF CACHE BOOL "Fetch and integrate MethaneKit (optional)" FORCE)
 
 # Guard: MethaneKit currently requires MSVC + Windows SDK. Disable on other toolchains (e.g., MinGW)  - TEMPORARY
 if(USE_METHANEKIT AND NOT MSVC)
@@ -38,12 +46,34 @@ target_include_directories(engine_renderer_abstraction
 
 add_library(engine_renderer_factory STATIC
         engine/renderer/Src/RendererFactory.cpp
-        engine/renderer/Src/Core/FrameGraph.cpp)
- target_link_libraries(engine_renderer_factory PUBLIC engine_renderer_abstraction)
+        engine/renderer/Src/Core/FrameGraph.cpp
+        engine/renderer/Src/RenderContextMethane.cpp)
+# Link only abstraction by default; add Methane RHI when enabled
+if(WIN32)
+    target_link_libraries(engine_renderer_factory PUBLIC engine_renderer_abstraction)
+else()
+    target_link_libraries(engine_renderer_factory PUBLIC engine_renderer_abstraction)
+endif()
+
+# Link D3D12 system libraries for the Direct3D path in the factory
+if(WIN32)
+    target_link_libraries(engine_renderer_factory PUBLIC d3d12 dxgi d3dcompiler)
+endif()
+
+# When MethaneKit is enabled, link RHI targets to allow creating a render context and presenting frames
+if(USE_METHANEKIT)
+    target_link_libraries(engine_renderer_factory PUBLIC
+        MethaneGraphicsRhiInterface
+        MethaneGraphicsRhiDirectX
+        MethanePlatformAppView
+        Taskflow
+    )
+endif()
 
 # Assets, Threading, Networking (headers-only for now)
 add_library(engine_assets STATIC
-        engine/assets/Src/SceneLoader.cpp)
+        engine/assets/Src/SceneLoader.cpp
+        engine/assets/Src/GlbLoader.cpp)
 
 target_include_directories(engine_assets
         PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/engine/assets/Include)
@@ -56,6 +86,9 @@ target_include_directories(engine_threading
 if(Boost_THREAD_FOUND OR TARGET Boost::thread)
     target_link_libraries(engine_threading INTERFACE Boost::thread)
 endif()
+
+add_library(engine_sound INTERFACE)
+target_include_directories(engine_sound INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/engine/sound/Include)
 
 add_library(engine_networking INTERFACE)
 target_include_directories(engine_networking
@@ -83,7 +116,7 @@ if(USE_METHANEKIT)
     FetchContent_Declare(
         MethaneKit
         GIT_REPOSITORY https://github.com/MethanePowered/MethaneKit.git
-        GIT_TAG v0.8.1
+        GIT_TAG 197855c
     )
     FetchContent_MakeAvailable(MethaneKit)
     # Define a project-wide macro to enable Methane-backed wrappers in headers
@@ -111,19 +144,33 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(entt)
 
+include(FetchContent)
+# --- Fetch OpenAL Soft ---
+FetchContent_Declare(
+        openal-soft
+        GIT_REPOSITORY https://github.com/kcat/openal-soft.git
+        GIT_TAG master   # or specify a stable release tag like "1.23.1"
+)
+# Optionally customize OpenAL build options before making it available
+set(ALSOFT_EXAMPLES OFF CACHE BOOL "" FORCE)
+set(ALSOFT_TESTS OFF CACHE BOOL "" FORCE)
+set(ALSOFT_UTILS OFF CACHE BOOL "" FORCE)
+
+FetchContent_MakeAvailable(openal-soft)
 
 
-# App executable showing an empty window
 add_executable(3DEngineTest WIN32
         main.cpp
         engine/ecs/Include/Components.h
         engine/ecs/Include/Systems.h
         engine/ecs/Src/Systems.cpp
+        toolbox/SceneGen/main.cpp
 )
 
 target_link_libraries(3DEngineTest PRIVATE
         EnTT::EnTT
         glm::glm
+        OpenAL::OpenAL
         engine_core
         engine_renderer_abstraction
         engine_renderer_factory
