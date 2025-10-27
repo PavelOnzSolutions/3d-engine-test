@@ -1,0 +1,8 @@
+#ifndef INC_3DENGINETEST_GAMESERVERCLIENT_H
+#define INC_3DENGINETEST_GAMESERVERCLIENT_H
+
+#endif //INC_3DENGINETEST_GAMESERVERCLIENT_H
+
+namespace Engine::Networking::GameServerClient {
+
+}
