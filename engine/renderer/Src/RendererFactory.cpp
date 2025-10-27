@@ -18,7 +18,6 @@
 #include <Engine/Assets/SceneLoader.h>
 #include <Engine/Core/Logger.h>
 #include <Engine/Core/Config.h>
-#include <Engine/Assets/ThirdParty/cgltf.h>
 #include <Engine/Assets/GlbLoader.h>
 #pragma comment(lib, "d3d12.lib")
 #pragma comment(lib, "dxgi.lib")
@@ -47,6 +46,16 @@ static std::wstring Utf8ToWide(const char* utf8)
     std::wstring wstr(static_cast<size_t>(wlen), L'\0');
     MultiByteToWideChar(CP_UTF8, 0, utf8, len, wstr.data(), wlen);
     return wstr;
+}
+
+static std::string WideToUtf8(const std::wstring& w)
+{
+    if (w.empty()) return {};
+    int len = WideCharToMultiByte(CP_UTF8, 0, w.c_str(), static_cast<int>(w.size()), nullptr, 0, nullptr, nullptr);
+    if (len <= 0) return {};
+    std::string s(static_cast<size_t>(len), '\0');
+    WideCharToMultiByte(CP_UTF8, 0, w.c_str(), static_cast<int>(w.size()), s.data(), len, nullptr, nullptr);
+    return s;
 }
 
 // No CPU/GDI placeholders allowed: all drawing happens via GPU pipelines now.
@@ -237,8 +246,10 @@ private:
         desc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
 
         D3D12_CLEAR_VALUE clear{}; clear.Format = DXGI_FORMAT_D24_UNORM_S8_UINT; clear.DepthStencil.Depth = 1.0f; clear.DepthStencil.Stencil = 0;
+        D3D12_HEAP_PROPERTIES heapProps{};
+        heapProps.Type = D3D12_HEAP_TYPE_DEFAULT;
         if (FAILED(m_device->CreateCommittedResource(
-                &CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT),
+                &heapProps,
                 D3D12_HEAP_FLAG_NONE,
                 &desc,
                 D3D12_RESOURCE_STATE_DEPTH_WRITE,
@@ -313,10 +324,41 @@ float4 main(VSOut i) : SV_Target { float3 c = 0.5 + 0.5*normalize(i.n); return f
         pso.pRootSignature = m_root_sig.Get();
         pso.VS = { vsb->GetBufferPointer(), vsb->GetBufferSize() };
         pso.PS = { psb->GetBufferPointer(), psb->GetBufferSize() };
-        pso.BlendState = CD3DX12_BLEND_DESC(D3D12_DEFAULT);
+        // Set default fixed-function state without d3dx12 helpers
+        D3D12_BLEND_DESC blendDesc{};
+        blendDesc.AlphaToCoverageEnable = FALSE;
+        blendDesc.IndependentBlendEnable = FALSE;
+        blendDesc.RenderTarget[0].BlendEnable = FALSE;
+        blendDesc.RenderTarget[0].LogicOpEnable = FALSE;
+        blendDesc.RenderTarget[0].SrcBlend = D3D12_BLEND_ONE;
+        blendDesc.RenderTarget[0].DestBlend = D3D12_BLEND_ZERO;
+        blendDesc.RenderTarget[0].BlendOp = D3D12_BLEND_OP_ADD;
+        blendDesc.RenderTarget[0].SrcBlendAlpha = D3D12_BLEND_ONE;
+        blendDesc.RenderTarget[0].DestBlendAlpha = D3D12_BLEND_ZERO;
+        blendDesc.RenderTarget[0].BlendOpAlpha = D3D12_BLEND_OP_ADD;
+        blendDesc.RenderTarget[0].LogicOp = D3D12_LOGIC_OP_NOOP;
+        blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
+        pso.BlendState = blendDesc;
         pso.SampleMask = UINT_MAX;
-        pso.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
-        pso.DepthStencilState = CD3DX12_DEPTH_STENCIL_DESC(D3D12_DEFAULT);
+        D3D12_RASTERIZER_DESC rast{};
+        rast.FillMode = D3D12_FILL_MODE_SOLID;
+        rast.CullMode = D3D12_CULL_MODE_BACK;
+        rast.FrontCounterClockwise = FALSE;
+        rast.DepthBias = D3D12_DEFAULT_DEPTH_BIAS;
+        rast.DepthBiasClamp = D3D12_DEFAULT_DEPTH_BIAS_CLAMP;
+        rast.SlopeScaledDepthBias = D3D12_DEFAULT_SLOPE_SCALED_DEPTH_BIAS;
+        rast.DepthClipEnable = TRUE;
+        rast.MultisampleEnable = FALSE;
+        rast.AntialiasedLineEnable = FALSE;
+        rast.ForcedSampleCount = 0;
+        rast.ConservativeRaster = D3D12_CONSERVATIVE_RASTERIZATION_MODE_OFF;
+        pso.RasterizerState = rast;
+        D3D12_DEPTH_STENCIL_DESC ds{};
+        ds.DepthEnable = TRUE;
+        ds.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
+        ds.DepthFunc = D3D12_COMPARISON_FUNC_LESS;
+        ds.StencilEnable = FALSE;
+        pso.DepthStencilState = ds;
         pso.InputLayout = { il, _countof(il) };
         pso.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
         pso.NumRenderTargets = 1; pso.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;
@@ -328,17 +370,91 @@ float4 main(VSOut i) : SV_Target { float3 c = 0.5 + 0.5*normalize(i.n); return f
 
     void LoadMeshFromScenePath()
     {
-        // TODO: integrate real cgltf parsing and upload buffers. For now, no-op if path unset.
-        (void)g_scene_path;
+        if (g_scene_path.empty()) return;
+        std::string scene_utf8 = WideToUtf8(g_scene_path);
+        Engine::Assets::MeshData mesh{};
+        std::vector<std::string> warns;
+        if (!Engine::Assets::LoadFirstTriangleMesh(scene_utf8, mesh, warns))
+        {
+            for (const auto& w : warns) Engine::Core::Logger::Info(std::string("[GLB] ") + w);
+            return;
+        }
+        // Log basic info
+        Engine::Core::Logger::Info(std::string("[GLB] Mesh loaded: ") + std::to_string(mesh.vertices.size()) + " verts, " + std::to_string(mesh.indices.size()) + " indices");
+
+        // Build GPU buffers in UPLOAD heap for simplicity
+        m_vb_size = static_cast<UINT>(mesh.vertices.size() * sizeof(VertexPNC));
+        m_ib_size = static_cast<UINT>(mesh.indices.size() * sizeof(uint32_t));
+        if (m_vb_size == 0 || m_ib_size == 0) return;
+
+        // Create VB
+        {
+            D3D12_HEAP_PROPERTIES heapProps{}; heapProps.Type = D3D12_HEAP_TYPE_UPLOAD;
+            D3D12_RESOURCE_DESC desc{};
+            desc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER; desc.Width = m_vb_size; desc.Height = 1; desc.DepthOrArraySize = 1; desc.MipLevels = 1;
+            desc.Format = DXGI_FORMAT_UNKNOWN; desc.SampleDesc = {1,0}; desc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR; desc.Flags = D3D12_RESOURCE_FLAG_NONE;
+            if (FAILED(m_device->CreateCommittedResource(&heapProps, D3D12_HEAP_FLAG_NONE, &desc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&m_vb))))
+                return;
+            void* ptr = nullptr; m_vb->Map(0, nullptr, &ptr);
+            if (ptr) {
+                // Convert from Assets::MeshData::VertexPNC to local VertexPNC if layouts match
+                memcpy(ptr, mesh.vertices.data(), m_vb_size);
+                m_vb->Unmap(0, nullptr);
+            }
+        }
+        // Create IB (choose 16-bit or 32-bit)
+        bool use16 = true;
+        for (uint32_t idx : mesh.indices) { if (idx > 0xFFFFu) { use16 = false; break; } }
+        m_index_format = use16 ? DXGI_FORMAT_R16_UINT : DXGI_FORMAT_R32_UINT;
+        if (use16)
+        {
+            m_ib_size = static_cast<UINT>(mesh.indices.size() * sizeof(uint16_t));
+            D3D12_HEAP_PROPERTIES heapProps{}; heapProps.Type = D3D12_HEAP_TYPE_UPLOAD;
+            D3D12_RESOURCE_DESC desc{};
+            desc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER; desc.Width = m_ib_size; desc.Height = 1; desc.DepthOrArraySize = 1; desc.MipLevels = 1;
+            desc.Format = DXGI_FORMAT_UNKNOWN; desc.SampleDesc = {1,0}; desc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR; desc.Flags = D3D12_RESOURCE_FLAG_NONE;
+            if (FAILED(m_device->CreateCommittedResource(&heapProps, D3D12_HEAP_FLAG_NONE, &desc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&m_ib)))) return;
+            void* ptr = nullptr; m_ib->Map(0, nullptr, &ptr);
+            if (ptr) {
+                std::vector<uint16_t> tmp; tmp.reserve(mesh.indices.size());
+                for (uint32_t v : mesh.indices) tmp.push_back(static_cast<uint16_t>(v));
+                memcpy(ptr, tmp.data(), m_ib_size);
+                m_ib->Unmap(0, nullptr);
+            }
+        }
+        else
+        {
+            D3D12_HEAP_PROPERTIES heapProps{}; heapProps.Type = D3D12_HEAP_TYPE_UPLOAD;
+            D3D12_RESOURCE_DESC desc{};
+            desc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER; desc.Width = m_ib_size; desc.Height = 1; desc.DepthOrArraySize = 1; desc.MipLevels = 1;
+            desc.Format = DXGI_FORMAT_UNKNOWN; desc.SampleDesc = {1,0}; desc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR; desc.Flags = D3D12_RESOURCE_FLAG_NONE;
+            if (FAILED(m_device->CreateCommittedResource(&heapProps, D3D12_HEAP_FLAG_NONE, &desc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&m_ib)))) return;
+            void* ptr = nullptr; m_ib->Map(0, nullptr, &ptr);
+            if (ptr) {
+                memcpy(ptr, mesh.indices.data(), m_ib_size);
+                m_ib->Unmap(0, nullptr);
+            }
+        }
+        m_index_count = static_cast<UINT>(mesh.indices.size());
     }
 
     // Helpers for resource creation
     Microsoft::WRL::ComPtr<ID3D12Resource> CreateBuffer(UINT64 size, D3D12_HEAP_TYPE heap, D3D12_RESOURCE_STATES state)
     {
         Microsoft::WRL::ComPtr<ID3D12Resource> res;
-        if (FAILED(m_device->CreateCommittedResource(
-                &CD3DX12_HEAP_PROPERTIES(heap), D3D12_HEAP_FLAG_NONE,
-                &CD3DX12_RESOURCE_DESC::Buffer(size), state, nullptr, IID_PPV_ARGS(&res)))) return {};
+        D3D12_HEAP_PROPERTIES heapProps{}; heapProps.Type = heap;
+        D3D12_RESOURCE_DESC desc{};
+        desc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+        desc.Alignment = 0;
+        desc.Width = size;
+        desc.Height = 1;
+        desc.DepthOrArraySize = 1;
+        desc.MipLevels = 1;
+        desc.Format = DXGI_FORMAT_UNKNOWN;
+        desc.SampleDesc = {1,0};
+        desc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+        desc.Flags = D3D12_RESOURCE_FLAG_NONE;
+        if (FAILED(m_device->CreateCommittedResource(&heapProps, D3D12_HEAP_FLAG_NONE, &desc, state, nullptr, IID_PPV_ARGS(&res)))) return {};
         return res;
     }
 
@@ -386,149 +502,6 @@ float4 main(VSOut i) : SV_Target { float3 c = 0.5 + 0.5*normalize(i.n); return f
     UINT m_ib_size{};
     DXGI_FORMAT m_index_format{ DXGI_FORMAT_R16_UINT };
     UINT m_index_count{};
-
-    Microsoft::WRL::ComPtr<ID3D12Fence> m_fence;
-    UINT64 m_fence_value{0};
-    HANDLE m_fence_event{};
-};
-public:
-    void SetScenePath(const char* scene_path_utf8) override { g_scene_path = Utf8ToWide(scene_path_utf8); }
-    bool Initialize(void* windowHandle) override {
-        // Initialize D3D12 device and swap chain for real GPU present
-        m_hwnd = reinterpret_cast<HWND>(windowHandle);
-
-        RECT rc{}; GetClientRect(m_hwnd, &rc);
-        m_width  = std::max(1u, static_cast<unsigned>(rc.right - rc.left));
-        m_height = std::max(1u, static_cast<unsigned>(rc.bottom - rc.top));
-
-        UINT dxgi_factory_flags = 0;
-#ifdef _DEBUG
-        {
-            Microsoft::WRL::ComPtr<ID3D12Debug> debugController;
-            if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController))))
-                debugController->EnableDebugLayer();
-            dxgi_factory_flags |= DXGI_CREATE_FACTORY_DEBUG;
-        }
-#endif
-        if (FAILED(CreateDXGIFactory2(dxgi_factory_flags, IID_PPV_ARGS(&m_factory)))) return false;
-        if (FAILED(D3D12CreateDevice(nullptr, D3D_FEATURE_LEVEL_11_0, IID_PPV_ARGS(&m_device)))) return false;
-
-        // Command queue
-        D3D12_COMMAND_QUEUE_DESC qdesc{}; qdesc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;
-        if (FAILED(m_device->CreateCommandQueue(&qdesc, IID_PPV_ARGS(&m_queue)))) return false;
-
-        // Swap chain
-        DXGI_SWAP_CHAIN_DESC1 scd{};
-        scd.BufferCount = FrameCount;
-        scd.Width = m_width;
-        scd.Height = m_height;
-        scd.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-        scd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-        scd.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
-        scd.SampleDesc.Count = 1;
-
-        Microsoft::WRL::ComPtr<IDXGISwapChain1> swap1;
-        if (FAILED(m_factory->CreateSwapChainForHwnd(m_queue.Get(), m_hwnd, &scd, nullptr, nullptr, &swap1))) return false;
-        if (FAILED(swap1.As(&m_swapchain))) return false;
-        m_frame_index = m_swapchain->GetCurrentBackBufferIndex();
-
-        // RTV heap and back buffers
-        D3D12_DESCRIPTOR_HEAP_DESC rtvDesc{}; rtvDesc.NumDescriptors = FrameCount; rtvDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
-        if (FAILED(m_device->CreateDescriptorHeap(&rtvDesc, IID_PPV_ARGS(&m_rtv_heap)))) return false;
-        m_rtv_descriptor_size = m_device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
-
-        D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = m_rtv_heap->GetCPUDescriptorHandleForHeapStart();
-        for (UINT n = 0; n < FrameCount; ++n)
-        {
-            if (FAILED(m_swapchain->GetBuffer(n, IID_PPV_ARGS(&m_render_targets[n])))) return false;
-            m_device->CreateRenderTargetView(m_render_targets[n].Get(), nullptr, rtvHandle);
-            rtvHandle.ptr += m_rtv_descriptor_size;
-            if (FAILED(m_device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&m_allocators[n])))) return false;
-        }
-
-        if (FAILED(m_device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, m_allocators[m_frame_index].Get(), nullptr, IID_PPV_ARGS(&m_cmd_list)))) return false;
-        m_cmd_list->Close();
-
-        if (FAILED(m_device->CreateFence(m_fence_value, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&m_fence)))) return false;
-        ++m_fence_value;
-        m_fence_event = CreateEvent(nullptr, FALSE, FALSE, nullptr);
-        return m_fence_event != nullptr;
-    }
-    void RenderFrame() override {
-        if (!m_device) return;
-        // Reset
-        m_allocators[m_frame_index]->Reset();
-        m_cmd_list->Reset(m_allocators[m_frame_index].Get(), nullptr);
-
-        // Transition to render target
-        D3D12_RESOURCE_BARRIER barrier{};
-        barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-        barrier.Transition.pResource = m_render_targets[m_frame_index].Get();
-        barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
-        barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;
-        barrier.Transition.StateAfter  = D3D12_RESOURCE_STATE_RENDER_TARGET;
-        m_cmd_list->ResourceBarrier(1, &barrier);
-
-        // Set RTV
-        D3D12_CPU_DESCRIPTOR_HANDLE rtv = m_rtv_heap->GetCPUDescriptorHandleForHeapStart();
-        rtv.ptr += static_cast<SIZE_T>(m_frame_index) * static_cast<SIZE_T>(m_rtv_descriptor_size);
-        const float clearColor[4] = { 0.10f, 0.10f, 0.12f, 1.0f };
-        m_cmd_list->ClearRenderTargetView(rtv, clearColor, 0, nullptr);
-
-        // Transition back to present
-        std::swap(barrier.Transition.StateBefore, barrier.Transition.StateAfter);
-        m_cmd_list->ResourceBarrier(1, &barrier);
-
-        m_cmd_list->Close();
-        ID3D12CommandList* lists[] = { m_cmd_list.Get() };
-        m_queue->ExecuteCommandLists(1, lists);
-        m_swapchain->Present(1, 0);
-        MoveToNextFrame();
-    }
-    void Shutdown() override {
-        if (m_queue && m_fence && m_fence_event) {
-            UINT64 fenceToWaitFor = m_fence_value;
-            if (SUCCEEDED(m_queue->Signal(m_fence.Get(), fenceToWaitFor))) {
-                m_fence_value++;
-                if (m_fence->GetCompletedValue() < fenceToWaitFor) {
-                    m_fence->SetEventOnCompletion(fenceToWaitFor, m_fence_event);
-                    WaitForSingleObject(m_fence_event, INFINITE);
-                }
-            }
-        }
-        if (m_fence_event) { CloseHandle(m_fence_event); m_fence_event = nullptr; }
-        // Release COM via ComPtr destructors
-        m_cmd_list.Reset();
-        for (auto& rt : m_render_targets) rt.Reset();
-        for (auto& al : m_allocators) al.Reset();
-        m_rtv_heap.Reset(); m_swapchain.Reset(); m_queue.Reset(); m_device.Reset(); m_factory.Reset();
-    }
-private:
-    void MoveToNextFrame() {
-        const UINT64 currentFence = m_fence_value;
-        m_queue->Signal(m_fence.Get(), currentFence);
-        ++m_fence_value;
-        if (m_fence->GetCompletedValue() < currentFence) {
-            m_fence->SetEventOnCompletion(currentFence, m_fence_event);
-            WaitForSingleObject(m_fence_event, INFINITE);
-        }
-        m_frame_index = m_swapchain->GetCurrentBackBufferIndex();
-    }
-
-    static constexpr UINT FrameCount = 2;
-    HWND m_hwnd{};
-    UINT m_width{800}, m_height{600};
-
-    Microsoft::WRL::ComPtr<IDXGIFactory6> m_factory;
-    Microsoft::WRL::ComPtr<ID3D12Device> m_device;
-    Microsoft::WRL::ComPtr<ID3D12CommandQueue> m_queue;
-    Microsoft::WRL::ComPtr<IDXGISwapChain3> m_swapchain;
-    Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> m_rtv_heap;
-    UINT m_rtv_descriptor_size{};
-    Microsoft::WRL::ComPtr<ID3D12Resource> m_render_targets[FrameCount];
-    Microsoft::WRL::ComPtr<ID3D12CommandAllocator> m_allocators[FrameCount];
-    Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> m_cmd_list;
-    UINT m_frame_index{};
 
     Microsoft::WRL::ComPtr<ID3D12Fence> m_fence;
     UINT64 m_fence_value{0};

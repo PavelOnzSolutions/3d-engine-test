@@ -57,7 +57,7 @@ endif()
 
 # Link D3D12 system libraries for the Direct3D path in the factory
 if(WIN32)
-    target_link_libraries(engine_renderer_factory PUBLIC d3d12 dxgi d3dcompiler)
+    target_link_libraries(engine_renderer_factory PUBLIC d3d12 dxgi d3dcompiler engine_assets)
 endif()
 
 # When MethaneKit is enabled, link RHI targets to allow creating a render context and presenting frames
@@ -75,10 +75,21 @@ add_library(engine_assets STATIC
         engine/assets/Src/SceneLoader.cpp
         engine/assets/Src/GlbLoader.cpp)
 
-target_include_directories(engine_assets
-        PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/engine/assets/Include)
+# Fetch cgltf (official single-header glTF 2.0 library)
+include(FetchContent)
+FetchContent_Declare(
+        cgltf
+        GIT_REPOSITORY https://github.com/jkuhlmann/cgltf.git
+        GIT_TAG v1.13
+)
+FetchContent_MakeAvailable(cgltf)
 
-target_link_libraries(engine_assets PUBLIC engine_core)
+# Expose engine assets includes and cgltf include directory
+ target_include_directories(engine_assets
+         PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/engine/assets/Include
+         PRIVATE ${cgltf_SOURCE_DIR})
+ 
+ target_link_libraries(engine_assets PUBLIC engine_core)
 
 add_library(engine_threading INTERFACE)
 target_include_directories(engine_threading
