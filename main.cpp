@@ -228,7 +228,22 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
 
         // Render a frame
         if (renderer)
+        {
+            // Provide model matrix from ECS (for primary entity)
+            if (registry.valid(entity))
+            {
+                const auto &t = registry.get<Transform>(entity);
+                // Build row-major 4x4: T * RzRyRx * S (here: translation only for demo)
+                float m[16] = {
+                    1,0,0,0,
+                    0,1,0,0,
+                    0,0,1,0,
+                    t.position.x, t.position.y, t.position.z, 1
+                };
+                renderer->SetModelMatrix(m);
+            }
             renderer->RenderFrame();
+        }
 
         // Draw overlays: FPS (top-right), and scene status (top-left if missing)
         {

@@ -15,6 +15,7 @@
 #include <d3d12.h>
 #include <dxgi1_6.h>
 #include <d3dcompiler.h>
+#include <cfloat>
 #include <Engine/Assets/SceneLoader.h>
 #include <Engine/Core/Logger.h>
 #include <Engine/Core/Config.h>
@@ -48,6 +49,7 @@ static std::wstring Utf8ToWide(const char* utf8)
     return wstr;
 }
 
+// Helper: convert wide string to UTF-8
 static std::string WideToUtf8(const std::wstring& w)
 {
     if (w.empty()) return {};
@@ -60,10 +62,67 @@ static std::string WideToUtf8(const std::wstring& w)
 
 // No CPU/GDI placeholders allowed: all drawing happens via GPU pipelines now.
 
+// --- Minimal math helpers (row-major helpers producing column-major arrays for HLSL/D3D) ---
+static void MakeIdentity(float m[16])
+{
+    for (int i=0;i<16;++i) m[i]=0.f; m[0]=m[5]=m[10]=m[15]=1.f;
+}
+static void CopyM(const float a[16], float b[16]) { for(int i=0;i<16;++i) b[i]=a[i]; }
+static void MulM(const float a[16], const float b[16], float r[16])
+{
+    // column-major r = a*b
+    for (int c=0;c<4;++c)
+        for (int r0=0;r0<4;++r0)
+            r[c*4+r0] = a[0*4+r0]*b[c*4+0] + a[1*4+r0]*b[c*4+1] + a[2*4+r0]*b[c*4+2] + a[3*4+r0]*b[c*4+3];
+}
+static void MakeTranslation(float x,float y,float z, float m[16])
+{ MakeIdentity(m); m[12]=x; m[13]=y; m[14]=z; }
+static void MakeScale(float sx,float sy,float sz, float m[16])
+{ MakeIdentity(m); m[0]=sx; m[5]=sy; m[10]=sz; }
+static void MakePerspectiveRH_ZO(float fovy_rad, float aspect, float znear, float zfar, float m[16])
+{
+    // Right-handed, depth 0..1 (D3D style).
+    const float f = 1.0f / std::tan(fovy_rad * 0.5f);
+    for (int i=0;i<16;++i) m[i]=0.f;
+    m[0] = f / aspect;
+    m[5] = f;
+    m[10] = zfar / (znear - zfar);
+    m[11] = -1.0f;
+    m[14] = (zfar * znear) / (znear - zfar);
+}
+static void MakeLookAtRH(const float eye[3], const float target[3], const float up_in[3], float m[16])
+{
+    // Column-major
+    float z[3] = { eye[0]-target[0], eye[1]-target[1], eye[2]-target[2] };
+    float lenz = std::sqrt(z[0]*z[0]+z[1]*z[1]+z[2]*z[2]); if (lenz>0){ z[0]/=lenz; z[1]/=lenz; z[2]/=lenz; }
+    // x = normalize(cross(up, z))
+    float x[3] = { up_in[1]*z[2]-up_in[2]*z[1], up_in[2]*z[0]-up_in[0]*z[2], up_in[0]*z[1]-up_in[1]*z[0] };
+    float lenx = std::sqrt(x[0]*x[0]+x[1]*x[1]+x[2]*x[2]); if (lenx>0){ x[0]/=lenx; x[1]/=lenx; x[2]/=lenx; }
+    // y = cross(z, x)
+    float y[3] = { z[1]*x[2]-z[2]*x[1], z[2]*x[0]-z[0]*x[2], z[0]*x[1]-z[1]*x[0] };
+
+    MakeIdentity(m);
+    m[0]=x[0]; m[4]=x[1]; m[8 ]=x[2];
+    m[1]=y[0]; m[5]=y[1]; m[9 ]=y[2];
+    m[2]=z[0]; m[6]=z[1]; m[10]=z[2];
+    // translation = -dot(axis, eye)
+    m[12]=-(x[0]*eye[0]+x[1]*eye[1]+x[2]*eye[2]);
+    m[13]=-(y[0]*eye[0]+y[1]*eye[1]+y[2]*eye[2]);
+    m[14]=-(z[0]*eye[0]+z[1]*eye[1]+z[2]*eye[2]);
+}
+
 
 class RendererDX12Stub : public IRenderer {
 public:
     void SetScenePath(const char* scene_path_utf8) override { g_scene_path = Utf8ToWide(scene_path_utf8); }
+    void SetModelMatrix(const float* m16_row_major) override {
+        if (!m16_row_major) return;
+        // Convert from row-major (app) to column-major (internal/HLSL)
+        for (int r=0;r<4;++r)
+            for (int c=0;c<4;++c)
+                m_model[c*4 + r] = m16_row_major[r*4 + c];
+        m_has_model = true;
+    }
     bool Initialize(void* windowHandle) override {
         // Initialize D3D12 device and swap chain for real GPU present
         m_hwnd = reinterpret_cast<HWND>(windowHandle);
@@ -76,17 +135,89 @@ public:
 #ifdef _DEBUG
         {
             Microsoft::WRL::ComPtr<ID3D12Debug> debugController;
-            if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController))))
+            if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController)))) {
                 debugController->EnableDebugLayer();
-            dxgi_factory_flags |= DXGI_CREATE_FACTORY_DEBUG;
+                dxgi_factory_flags |= DXGI_CREATE_FACTORY_DEBUG;
+            }
         }
 #endif
-        if (FAILED(CreateDXGIFactory2(dxgi_factory_flags, IID_PPV_ARGS(&m_factory)))) return false;
-        if (FAILED(D3D12CreateDevice(nullptr, D3D_FEATURE_LEVEL_11_0, IID_PPV_ARGS(&m_device)))) return false;
+        // Create the DXGI factory with the broadest compatibility, then upcast when available
+        Microsoft::WRL::ComPtr<IDXGIFactory1> base_factory;
+        HRESULT hr = CreateDXGIFactory2(dxgi_factory_flags, IID_PPV_ARGS(&base_factory));
+        if (FAILED(hr)) {
+            Engine::Core::Logger::Info("DXGI factory creation with flags failed, retrying without flags...");
+            hr = CreateDXGIFactory2(0, IID_PPV_ARGS(&base_factory));
+        }
+        if (FAILED(hr) || !base_factory) {
+            Engine::Core::Logger::Error("CreateDXGIFactory2 failed.");
+            return false;
+        }
+        // Store as Factory4 for APIs we use, if possible
+        if (FAILED(base_factory.As(&m_factory))) {
+            Engine::Core::Logger::Info("IDXGIFactory4 interface not available; attempting to continue with base factory.");
+        }
+        // Prepare commonly used factory interfaces
+        Microsoft::WRL::ComPtr<IDXGIFactory2> factory_swap_chain; // for CreateSwapChainForHwnd
+        Microsoft::WRL::ComPtr<IDXGIFactory4> factory_warp_adapter; // for EnumWarpAdapter
+        if (m_factory) { m_factory.As(&factory_swap_chain); m_factory.As(&factory_warp_adapter); }
+        if (!factory_swap_chain) base_factory.As(&factory_swap_chain);
+        if (!factory_warp_adapter) base_factory.As(&factory_warp_adapter);
+
+        // Choose adapter: prefer high-performance hardware, fallback to WARP if needed
+        Microsoft::WRL::ComPtr<IDXGIAdapter1> chosen_adapter;
+        Microsoft::WRL::ComPtr<IDXGIFactory6> factory6;
+        if (m_factory) m_factory.As(&factory6);
+        if (factory6) {
+            for (UINT index = 0;; ++index) {
+                Microsoft::WRL::ComPtr<IDXGIAdapter1> adapter;
+                if (FAILED(factory6->EnumAdapterByGpuPreference(index, DXGI_GPU_PREFERENCE_HIGH_PERFORMANCE, IID_PPV_ARGS(&adapter))))
+                    break;
+                DXGI_ADAPTER_DESC1 desc{}; adapter->GetDesc1(&desc);
+                if (desc.Flags & DXGI_ADAPTER_FLAG_SOFTWARE) continue; // skip software
+                if (SUCCEEDED(D3D12CreateDevice(adapter.Get(), D3D_FEATURE_LEVEL_11_0, _uuidof(ID3D12Device), nullptr))) {
+                    chosen_adapter = adapter;
+                    break;
+                }
+            }
+        }
+        if (!chosen_adapter) {
+            // Fallback: enumerate all adapters and pick the first hardware-capable one
+            for (UINT index = 0;; ++index) {
+                Microsoft::WRL::ComPtr<IDXGIAdapter1> adapter;
+                if (FAILED(m_factory->EnumAdapters1(index, &adapter))) break;
+                DXGI_ADAPTER_DESC1 desc{}; adapter->GetDesc1(&desc);
+                if (desc.Flags & DXGI_ADAPTER_FLAG_SOFTWARE) continue;
+                if (SUCCEEDED(D3D12CreateDevice(adapter.Get(), D3D_FEATURE_LEVEL_11_0, _uuidof(ID3D12Device), nullptr))) {
+                    chosen_adapter = adapter;
+                    break;
+                }
+            }
+        }
+        if (chosen_adapter) {
+            if (FAILED(D3D12CreateDevice(chosen_adapter.Get(), D3D_FEATURE_LEVEL_11_0, IID_PPV_ARGS(&m_device)))) {
+                Engine::Core::Logger::Error("D3D12CreateDevice failed on chosen hardware adapter.");
+                return false;
+            }
+        } else {
+            // Final fallback to WARP
+            Microsoft::WRL::ComPtr<IDXGIAdapter> warp;
+            if (FAILED(m_factory->EnumWarpAdapter(IID_PPV_ARGS(&warp)))) {
+                Engine::Core::Logger::Error("No suitable DXGI adapter found and WARP adapter enum failed.");
+                return false;
+            }
+            if (FAILED(D3D12CreateDevice(warp.Get(), D3D_FEATURE_LEVEL_11_0, IID_PPV_ARGS(&m_device)))) {
+                Engine::Core::Logger::Error("D3D12CreateDevice failed on WARP adapter.");
+                return false;
+            }
+            Engine::Core::Logger::Info("Using D3D12 WARP adapter as fallback.");
+        }
 
         // Command queue
         D3D12_COMMAND_QUEUE_DESC qdesc{}; qdesc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;
-        if (FAILED(m_device->CreateCommandQueue(&qdesc, IID_PPV_ARGS(&m_queue)))) return false;
+        if (FAILED(m_device->CreateCommandQueue(&qdesc, IID_PPV_ARGS(&m_queue)))) {
+            Engine::Core::Logger::Error("CreateCommandQueue failed.");
+            return false;
+        }
 
         // Swap chain
         DXGI_SWAP_CHAIN_DESC1 scd{};
@@ -95,7 +226,8 @@ public:
         scd.Height = m_height;
         scd.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
         scd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-        scd.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
+        // Use SEQUENTIAL swap effect to allow GDI overlays on top (flip model does not support GDI drawing)
+        scd.SwapEffect = DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL;
         scd.SampleDesc.Count = 1;
 
         Microsoft::WRL::ComPtr<IDXGISwapChain1> swap1;
@@ -169,8 +301,20 @@ public:
         if (m_vb.Get() && m_ib.Get() && m_index_count > 0)
         {
             m_cmd_list->SetGraphicsRootSignature(m_root_sig.Get());
-            // Set a very basic MVP = identity (clip-space positions should be transformed in VS)
-            float mvp[16] = { 1,0,0,0,  0,1,0,0,  0,0,1,0,  0,0,0,1 };
+            // Compute a simple MVP: proj(view(model(x))) with model = identity, view looking at origin, proj using aspect
+            float proj[16], view[16], vp[16], mvp[16];
+            const float aspect = m_height ? (static_cast<float>(m_width) / static_cast<float>(m_height)) : 1.3333f;
+            MakePerspectiveRH_ZO(60.0f * 3.14159265f / 180.0f, aspect, 0.1f, 100.0f, proj);
+            const float eye[3] = { 0.0f, 0.0f, 3.0f };
+            const float at[3]  = { 0.0f, 0.0f, 0.0f };
+            const float up[3]  = { 0.0f, 1.0f, 0.0f };
+            MakeLookAtRH(eye, at, up, view);
+            MulM(proj, view, vp);
+            // Use provided model matrix if available, else identity
+            float model_col_major[16];
+            if (m_has_model) { for (int i=0;i<16;++i) model_col_major[i]=m_model[i]; }
+            else { MakeIdentity(model_col_major); }
+            MulM(vp, model_col_major, mvp);
             m_cmd_list->SetGraphicsRoot32BitConstants(0, 16, mvp, 0);
 
             D3D12_VERTEX_BUFFER_VIEW vbv{};
@@ -226,6 +370,9 @@ public:
     }
 private:
     struct VertexPNC { float px,py,pz; float nx,ny,nz; float u,v; };
+    // Model matrix provided by application (column-major for HLSL). If not set, identity is used.
+    float m_model[16]{};
+    bool  m_has_model{false};
 
     bool CreateDepthBuffer()
     {
@@ -294,7 +441,7 @@ float4 main(VSOut i) : SV_Target { float3 c = 0.5 + 0.5*normalize(i.n); return f
         if (!CompileShader(vs, "main", "vs_5_0", vsb)) return false;
         if (!CompileShader(ps, "main", "ps_5_0", psb)) return false;
 
-        // Root signature: 1 CBV as root constants (we'll use 16*float constants)
+        // Root signature: 16 x 32-bit root constants for MVP at b0
         D3D12_ROOT_PARAMETER rp{};
         rp.ParameterType = D3D12_ROOT_PARAMETER_TYPE_32BIT_CONSTANTS;
         rp.Constants.Num32BitValues = 16;
@@ -342,7 +489,9 @@ float4 main(VSOut i) : SV_Target { float3 c = 0.5 + 0.5*normalize(i.n); return f
         pso.SampleMask = UINT_MAX;
         D3D12_RASTERIZER_DESC rast{};
         rast.FillMode = D3D12_FILL_MODE_SOLID;
-        rast.CullMode = D3D12_CULL_MODE_BACK;
+        // Disable back-face culling to avoid winding/order mismatches between glTF (RH) and D3D (LH)
+        // This guarantees visibility for initial bring-up. We can restore BACK culling once transforms are finalized.
+        rast.CullMode = D3D12_CULL_MODE_NONE;
         rast.FrontCounterClockwise = FALSE;
         rast.DepthBias = D3D12_DEFAULT_DEPTH_BIAS;
         rast.DepthBiasClamp = D3D12_DEFAULT_DEPTH_BIAS_CLAMP;
@@ -372,13 +521,49 @@ float4 main(VSOut i) : SV_Target { float3 c = 0.5 + 0.5*normalize(i.n); return f
     {
         if (g_scene_path.empty()) return;
         std::string scene_utf8 = WideToUtf8(g_scene_path);
+        Engine::Core::Logger::Info(std::string("[GLB] Attempting to load mesh from ") + scene_utf8);
         Engine::Assets::MeshData mesh{};
         std::vector<std::string> warns;
-        if (!Engine::Assets::LoadFirstTriangleMesh(scene_utf8, mesh, warns))
-        {
+        auto try_load = [&](const std::string& p)->bool {
+            warns.clear();
+            bool ok = Engine::Assets::LoadFirstTriangleMesh(p, mesh, warns);
             for (const auto& w : warns) Engine::Core::Logger::Info(std::string("[GLB] ") + w);
+            return ok;
+        };
+        if (!try_load(scene_utf8))
+        {
+            // Fallbacks: try file name only, and assets/scenes/<file>
+            const size_t slash = scene_utf8.find_last_of("/\\");
+            const std::string filename = (slash == std::string::npos) ? scene_utf8 : scene_utf8.substr(slash + 1);
+            if (!filename.empty())
+            {
+                if (try_load(filename)) goto loaded_ok;
+                std::string alt = std::string("assets/scenes/") + filename;
+                if (try_load(alt)) goto loaded_ok;
+            }
+            Engine::Core::Logger::Info("[GLB] Failed to load mesh after fallbacks; no geometry will be drawn.");
             return;
         }
+loaded_ok:
+        // Compute bounds
+        float minv[3] = { +FLT_MAX, +FLT_MAX, +FLT_MAX };
+        float maxv[3] = { -FLT_MAX, -FLT_MAX, -FLT_MAX };
+        for (const auto& v : mesh.vertices) {
+            minv[0] = std::min(minv[0], v.px); minv[1] = std::min(minv[1], v.py); minv[2] = std::min(minv[2], v.pz);
+            maxv[0] = std::max(maxv[0], v.px); maxv[1] = std::max(maxv[1], v.py); maxv[2] = std::max(maxv[2], v.pz);
+        }
+        float center[3] = { 0.5f*(minv[0]+maxv[0]), 0.5f*(minv[1]+maxv[1]), 0.5f*(minv[2]+maxv[2]) };
+        float rx = 0.5f*(maxv[0]-minv[0]);
+        float ry = 0.5f*(maxv[1]-minv[1]);
+        float rz = 0.5f*(maxv[2]-minv[2]);
+        float radius = std::max({ rx, ry, rz, 0.0001f });
+        // Normalize vertices to unit sphere around origin so a default camera sees them
+        for (auto& vtx : mesh.vertices) {
+            vtx.px = (vtx.px - center[0]) / radius;
+            vtx.py = (vtx.py - center[1]) / radius;
+            vtx.pz = (vtx.pz - center[2]) / radius;
+        }
+
         // Log basic info
         Engine::Core::Logger::Info(std::string("[GLB] Mesh loaded: ") + std::to_string(mesh.vertices.size()) + " verts, " + std::to_string(mesh.indices.size()) + " indices");
 
@@ -397,7 +582,6 @@ float4 main(VSOut i) : SV_Target { float3 c = 0.5 + 0.5*normalize(i.n); return f
                 return;
             void* ptr = nullptr; m_vb->Map(0, nullptr, &ptr);
             if (ptr) {
-                // Convert from Assets::MeshData::VertexPNC to local VertexPNC if layouts match
                 memcpy(ptr, mesh.vertices.data(), m_vb_size);
                 m_vb->Unmap(0, nullptr);
             }
