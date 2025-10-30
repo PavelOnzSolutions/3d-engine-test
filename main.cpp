@@ -7,6 +7,7 @@
 #include <Engine/Renderer/RendererFactory.h>
 #include <sstream>
 #include <chrono>
+#include <cmath>
 #include <iomanip>
 #include <algorithm>
 #include <vector>
@@ -233,7 +234,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
             if (registry.valid(entity))
             {
                 const auto &t = registry.get<Transform>(entity);
-                // Build row-major 4x4: T * RzRyRx * S (here: translation only for demo)
                 float m[16] = {
                     1,0,0,0,
                     0,1,0,0,
@@ -242,35 +242,43 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
                 };
                 renderer->SetModelMatrix(m);
             }
-            renderer->RenderFrame();
-        }
 
-        // Draw overlays: FPS (top-right), and scene status (top-left if missing)
-        {
+            // Prepare overlays via renderer API (must be rendered by renderer before Present)
             RECT rc{}; GetClientRect(hWnd, &rc);
-            const int padding = 10;
-            HDC hdc = GetDC(hWnd);
-            if (hdc)
-            {
-                SetBkMode(hdc, TRANSPARENT);
-                SetTextColor(hdc, RGB(255,255,255));
-                // FPS at top-right
-                RECT tr{ rc.right - 200 - padding, rc.top + padding, rc.right - padding, rc.top + 50 };
-                DrawTextW(hdc, fps_text.c_str(), static_cast<int>(fps_text.size()), &tr, DT_RIGHT | DT_TOP | DT_SINGLELINE | DT_NOPREFIX);
+            constexpr int padding = 10;
+            renderer->ClearOverlayTexts();
 
-                // Scene status at top-left if scene missing
-                if (loadedScene.nodes_count == 0 && !loadedScene.scene_path.empty())
-                {
-                    std::wstring ws = L"Scene not found: ";
-                    int wlen = MultiByteToWideChar(CP_UTF8, 0, loadedScene.scene_path.c_str(), (int)loadedScene.scene_path.size(), nullptr, 0);
-                    std::wstring wpath((size_t)wlen, L'\0');
-                    MultiByteToWideChar(CP_UTF8, 0, loadedScene.scene_path.c_str(), (int)loadedScene.scene_path.size(), wpath.data(), wlen);
-                    ws += wpath;
-                    RECT tl{ rc.left + padding, rc.top + padding, rc.left + padding + 600, rc.top + 60 };
-                    DrawTextW(hdc, ws.c_str(), static_cast<int>(ws.size()), &tl, DT_LEFT | DT_TOP | DT_SINGLELINE | DT_NOPREFIX | DT_END_ELLIPSIS);
-                }
-                ReleaseDC(hWnd, hdc);
+            // FPS top-right (right-aligned)
+            Engine::Renderer::OverlayText fpsOverlay;
+            fpsOverlay.text = fps_text;
+            fpsOverlay.fontSize = 16;
+            fpsOverlay.color = 0x00FFFFFF; // white (alpha handled by renderer)
+            fpsOverlay.rightAlign = true;
+            // place near top-right; renderer should respect rightAlign
+            fpsOverlay.x = rc.right - padding - 200; // x baseline region
+            fpsOverlay.y = rc.top + padding;
+            renderer->AddOverlayText(fpsOverlay);
+
+            // Scene-not-found at top-left (if applicable)
+            if (loadedScene.nodes_count == 0 && !loadedScene.scene_path.empty())
+            {
+                std::wstring ws;
+                int wlen = MultiByteToWideChar(CP_UTF8, 0, loadedScene.scene_path.c_str(), static_cast<int>(loadedScene.scene_path.size()), nullptr, 0);
+                ws.resize(static_cast<size_t>(wlen));
+                MultiByteToWideChar(CP_UTF8, 0, loadedScene.scene_path.c_str(), static_cast<int>(loadedScene.scene_path.size()), ws.data(), wlen);
+
+                Engine::Renderer::OverlayText sceneOverlay;
+                sceneOverlay.text = std::wstring(L"Scene not found: ") + ws;
+                sceneOverlay.fontSize = 14;
+                sceneOverlay.color = 0x00FFFFFF;
+                sceneOverlay.rightAlign = false;
+                sceneOverlay.x = rc.left + padding;
+                sceneOverlay.y = rc.top + padding;
+                renderer->AddOverlayText(sceneOverlay);
             }
+
+            // Now the renderer will draw scene + overlay and present
+            renderer->RenderFrame();
         }
 
         // FPS accounting
@@ -283,10 +291,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
             // Update on-screen FPS text once per second
             std::wstringstream wss;
             wss.setf(std::ios::fixed);
-            wss << L"FPS: " << static_cast<int>(current_fps + 0.5);
+            wss << L"FPS: " << static_cast<int>(lround(current_fps + 0.5));
             fps_text = wss.str();
 
             // Debug: report entity position to log
+#ifdef _DEBUG
             if (registry.valid(entity))
             {
                 const auto &t = registry.get<Transform>(entity);
@@ -296,6 +305,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
                 oss << "ECS Transform: x=" << t.position.x << ", y=" << t.position.y << ", z=" << t.position.z;
                 Engine::Core::Logger::Info(oss.str());
             }
+#endif
 
             // reset
             frame_count = 0;

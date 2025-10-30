@@ -47,7 +47,10 @@ target_include_directories(engine_renderer_abstraction
 add_library(engine_renderer_factory STATIC
         engine/renderer/Src/RendererFactory.cpp
         engine/renderer/Src/Core/FrameGraph.cpp
-        engine/renderer/Src/RenderContextMethane.cpp)
+        engine/renderer/Src/RenderContextMethane.cpp
+        engine/renderer/Src/DX12TextRenderer.cpp
+        engine/renderer/Src/TextRendererVulkan.cpp
+)
 # Link only abstraction by default; add Methane RHI when enabled
 if(WIN32)
     target_link_libraries(engine_renderer_factory PUBLIC engine_renderer_abstraction)
@@ -70,11 +73,6 @@ if(USE_METHANEKIT)
     )
 endif()
 
-# Assets, Threading, Networking (headers-only for now)
-add_library(engine_assets STATIC
-        engine/assets/Src/SceneLoader.cpp
-        engine/assets/Src/GlbLoader.cpp)
-
 # Fetch cgltf (official single-header glTF 2.0 library)
 include(FetchContent)
 FetchContent_Declare(
@@ -84,12 +82,26 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(cgltf)
 
+
+# Assets
+add_library(engine_assets STATIC
+        engine/assets/Src/SceneLoader.cpp
+        engine/assets/Src/GlbLoader.cpp)
+
 # Expose engine assets includes and cgltf include directory
  target_include_directories(engine_assets
          PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/engine/assets/Include
          PRIVATE ${cgltf_SOURCE_DIR})
  
- target_link_libraries(engine_assets PUBLIC engine_core)
+target_link_libraries(engine_assets PUBLIC engine_core)
+
+# UTILS
+add_library(engine_utils STATIC
+        engine/utils/Src/StringUtils.cpp)
+
+target_include_directories(engine_utils
+        PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/engine/utils/Include)
+target_link_libraries(engine_renderer_abstraction INTERFACE engine_utils)
 
 add_library(engine_threading INTERFACE)
 target_include_directories(engine_threading
@@ -176,6 +188,7 @@ add_executable(3DEngineTest WIN32
         engine/ecs/Include/Systems.h
         engine/ecs/Src/Systems.cpp
         toolbox/SceneGen/main.cpp
+        engine/renderer_dx12/Include/Engine/Renderer/RendererDX12.h
 )
 
 target_link_libraries(3DEngineTest PRIVATE
@@ -192,7 +205,16 @@ target_link_libraries(3DEngineTest PRIVATE
 
 # Link Win32 libs for window creation with MinGW/MSVC
 if(WIN32)
-    target_link_libraries(3DEngineTest PRIVATE user32 gdi32)
+    target_link_libraries(3DEngineTest PRIVATE
+            user32
+            gdi32
+            d3d12        # d3d12.lib
+            dxgi         # dxgi.lib
+            d3dcompiler  # d3dcompiler.lib
+            d3d11        # d3d11.lib (for D3D11On12 interop)
+            d2d1         # d2d1.lib
+            dwrite
+    )
 endif()
 
 # On MinGW, statically link GCC, libstdc++, and winpthread to avoid missing runtime DLLs at startup
